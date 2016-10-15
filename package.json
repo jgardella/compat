@@ -1,9 +1,10 @@
 {
   "name": "compat",
   "version": "0.0.1",
-  "description": "Detects browser compatiblity issues in JavaScript code.",
-  "main": "index.js",
+  "description": "Static analysis to detect browser compatiblity issues in JavaScript code.",
+  "main": "src/compat.js",
   "scripts": {
+    "start": "node src/compat.js",
     "test": "mocha --recursive test",
     "test-es6": "mocha test/es6"
   },

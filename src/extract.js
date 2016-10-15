@@ -1,5 +1,6 @@
 let esprima = require('esprima');
 let estraverse = require('estraverse');
+let allFeatures = require('./features/all.js');
 
 const esprimaOptions = {
   loc: true
@@ -13,6 +14,15 @@ const esprimaOptions = {
  */
 function withFeatures(program, features) {
   return traverseAST(esprima.parse(program, esprimaOptions), features);
+}
+
+/**
+ * Extracts features from the provided program text,
+ * scanning for all defined features.
+ * @param program {string} program text
+ */
+function withAllFeatures(program) {
+  return withFeatures(program, allFeatures);
 }
 
 /**
@@ -43,5 +53,6 @@ function traverseAST(ast, funcs) {
 }
 
 module.exports = {
-  withFeatures: withFeatures
+  withFeatures: withFeatures,
+  withAllFeatures: withAllFeatures
 }
