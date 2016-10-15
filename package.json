@@ -1,0 +1,19 @@
+{
+  "name": "compat",
+  "version": "0.0.1",
+  "description": "Detects browser compatiblity issues in JavaScript code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive test",
+    "test-es6": "mocha test/es6"
+  },
+  "author": "Jason Gardella <jason.a.gardella@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "esprima": "^3.1.0",
+    "estraverse": "^4.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  }
+}
