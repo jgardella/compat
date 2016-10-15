@@ -30,7 +30,7 @@ function traverseAST(ast, funcs) {
       funcs.forEach((func) => {
         let feature = func(node, parent);
         if (feature !== undefined) {
-          foundFeatures.push(feature);
+          foundFeatures = foundFeatures.concat(feature);
         }
       });
     },
