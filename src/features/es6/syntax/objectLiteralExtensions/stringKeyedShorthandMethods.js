@@ -1,3 +1,5 @@
+let util = require('../../../util.js')
+
 const TYPE = 'object literal extensions_string keyed shorthand methods'
 
 exports.type = TYPE
@@ -10,6 +12,6 @@ exports.func = (node, parent) => {
       node.key.type === 'Literal' &&
       node.method &&
       node.kind === 'init') {
-    return Object.assign({}, node.loc, { type: TYPE })
+    return util.createFeature(node.loc, TYPE)
   }
 }

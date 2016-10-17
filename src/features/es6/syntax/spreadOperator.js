@@ -1,3 +1,5 @@
+let util = require('../../util.js')
+
 const TYPE = 'spread (...) operator'
 
 exports.type = TYPE
@@ -8,6 +10,6 @@ exports.type = TYPE
 exports.func = (node, parent) => {
   // not sure if this if a sufficient check for spread operator
   if (node.type === 'SpreadElement') {
-    return Object.assign({}, node.loc, { type: TYPE })
+    return util.createFeature(node.loc, TYPE)
   }
 }

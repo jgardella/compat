@@ -1,3 +1,5 @@
+let util = require('../../../util.js')
+
 const TYPE = 'object literal extensions_shorthand properties'
 
 exports.type = TYPE
@@ -7,6 +9,6 @@ exports.type = TYPE
  */
 exports.func = (node, parent) => {
   if (node.type === 'Property' && node.shorthand) {
-    return Object.assign({}, node.loc, { type: TYPE })
+    return util.createFeature(node.loc, TYPE)
   }
 }

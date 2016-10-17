@@ -1,3 +1,5 @@
+let util = require('../../../util.js')
+
 const TYPE = 'object literal extensions_computed accessors'
 
 exports.type = TYPE
@@ -9,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'Property' &&
       node.computed &&
       (node.kind === 'get' || node.kind === 'set')) {
-    return Object.assign({}, node.loc, { type: TYPE })
+    return util.createFeature(node.loc, TYPE)
   }
 }

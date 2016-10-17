@@ -1,3 +1,5 @@
+let util = require('../../../util.js')
+
 const TYPE = 'object literal extensions_computed shorthand methods'
 
 exports.type = TYPE
@@ -11,6 +13,6 @@ exports.func = (node, parent) => {
       node.method &&
       node.computed &&
       node.kind === 'init') {
-    return Object.assign({}, node.loc, { type: TYPE })
+    return util.createFeature(node.loc, TYPE)
   }
 }

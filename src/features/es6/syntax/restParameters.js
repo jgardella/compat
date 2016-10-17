@@ -1,3 +1,5 @@
+let util = require('../../util.js')
+
 const TYPE = 'rest parameters'
 
 exports.type = TYPE
@@ -8,6 +10,6 @@ exports.type = TYPE
 exports.func = (node, parent) => {
   // not sure if this if a sufficient check for rest parameters
   if (node.type === 'RestElement') {
-    return Object.assign({}, node.loc, { type: TYPE })
+    return util.createFeature(node.loc, TYPE)
   }
 }
