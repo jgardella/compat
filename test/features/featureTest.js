@@ -6,9 +6,11 @@ module.exports = function (program, feature) {
     throw new Error('Feature not defined.')
   }
 
+  let foundFeatures = extract.withFeatures(program, [feature.func])
+
   assert.equal(true,
-    extract.withFeatures(program, [feature.func]).some((foundFeature) => {
-      return foundFeature.type === feature.type
+    Object.keys(foundFeatures).some((key) => {
+      return key === feature.type
     })
   )
 }
