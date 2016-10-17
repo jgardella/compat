@@ -1,4 +1,4 @@
-const TYPE = 'computedProperties';
+const TYPE = 'object literal extensions_computed properties';
 
 exports.type = TYPE;
 

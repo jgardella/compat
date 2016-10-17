@@ -1,4 +1,4 @@
-const TYPE = 'defaultFunctionParams';
+const TYPE = 'default function parameters';
 
 exports.type = TYPE;
 

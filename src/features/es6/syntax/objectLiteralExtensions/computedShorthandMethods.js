@@ -1,4 +1,4 @@
-const TYPE = 'computedShorthandMethods';
+const TYPE = 'object literal extensions_computed shorthand methods';
 
 exports.type = TYPE;
 

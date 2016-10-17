@@ -1,4 +1,4 @@
-const TYPE = 'restParameters';
+const TYPE = 'rest parameters';
 
 exports.type = TYPE;
 

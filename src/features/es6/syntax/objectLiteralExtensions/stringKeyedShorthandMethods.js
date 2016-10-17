@@ -1,4 +1,4 @@
-const TYPE = 'stringKeyedShorthandMethods';
+const TYPE = 'object literal extensions_string keyed shorthand methods';
 
 exports.type = TYPE;
 

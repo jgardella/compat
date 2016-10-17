@@ -1,4 +1,4 @@
-const TYPE = 'spreadOperator';
+const TYPE = 'spread (...) operator';
 
 exports.type = TYPE;
 

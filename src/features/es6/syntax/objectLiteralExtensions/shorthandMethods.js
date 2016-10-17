@@ -1,4 +1,4 @@
-const TYPE = 'shorthandMethods';
+const TYPE = 'object literal extensions_shorthand methods';
 
 exports.type = TYPE;
 

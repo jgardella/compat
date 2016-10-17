@@ -1,4 +1,4 @@
-const TYPE = 'computedAccessors';
+const TYPE = 'object literal extensions_computed accessors';
 
 exports.type = TYPE;
 
