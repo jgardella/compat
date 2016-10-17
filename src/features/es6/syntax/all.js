@@ -8,6 +8,7 @@ let templateLiterals = require('./templateLiterals.js')
 let destructuringDeclarations = require('./destructuringDeclarations.js')
 let destructuringAssignment = require('./destructuringAssignment.js')
 let destructuringParameters = require('./destructuringParameters.js')
+let newTarget = require('./newTarget.js')
 
 module.exports = [].concat(
   defaultFunctionParams.func,
@@ -19,5 +20,6 @@ module.exports = [].concat(
   templateLiterals.func,
   destructuringDeclarations.func,
   destructuringAssignment.func,
-  destructuringParameters.func
+  destructuringParameters.func,
+  newTarget.func
 )
