@@ -5,6 +5,8 @@ let objectLiteralExtensions = require('./objectLiteralExtensions/all.js')
 let forOfLoops = require('./forOfLoops.js')
 let octalAndBinaryLiterals = require('./octalAndBinaryLiterals/all.js')
 let templateLiterals = require('./templateLiterals.js')
+let destructuringDeclarations = require('./destructuringDeclarations.js')
+let destructuringAssignment = require('./destructuringAssignment.js')
 
 module.exports = [].concat(
   defaultFunctionParams.func,
@@ -13,5 +15,7 @@ module.exports = [].concat(
   objectLiteralExtensions,
   forOfLoops.func,
   octalAndBinaryLiterals,
-  templateLiterals.func
+  templateLiterals.func,
+  destructuringDeclarations.func,
+  destructuringAssignment.func
 )
