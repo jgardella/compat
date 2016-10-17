@@ -7,6 +7,7 @@ let octalAndBinaryLiterals = require('./octalAndBinaryLiterals/all.js')
 let templateLiterals = require('./templateLiterals.js')
 let destructuringDeclarations = require('./destructuringDeclarations.js')
 let destructuringAssignment = require('./destructuringAssignment.js')
+let destructuringParameters = require('./destructuringParameters.js')
 
 module.exports = [].concat(
   defaultFunctionParams.func,
@@ -17,5 +18,6 @@ module.exports = [].concat(
   octalAndBinaryLiterals,
   templateLiterals.func,
   destructuringDeclarations.func,
-  destructuringAssignment.func
+  destructuringAssignment.func,
+  destructuringParameters.func
 )
