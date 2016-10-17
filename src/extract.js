@@ -30,17 +30,20 @@ function withAllFeatures (program) {
  * in the list of functions to every node.
  * @param ast AST in ESTree format
  * @param funcs {Function[]} list of functions to apply to each node
- * @return array of found features
+ * @return hash map of found features
  */
 function traverseAST (ast, funcs) {
-  let foundFeatures = []
+  let foundFeatures = {}
 
   estraverse.traverse(ast, {
     enter: function (node, parent) {
       funcs.forEach((func) => {
         let feature = func(node, parent)
         if (feature !== undefined) {
-          foundFeatures = foundFeatures.concat(feature)
+          if (foundFeatures[feature.type] === undefined) {
+            foundFeatures[feature.type] = []
+          }
+          foundFeatures[feature.type].push(feature)
         }
       })
     },
