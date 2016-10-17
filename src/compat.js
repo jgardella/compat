@@ -1,5 +1,6 @@
 let extract = require('./extract.js')
 let check = require('./check.js')
+let output = require('./output.js')
 
 let usedFeatures = extract.withAllFeatures(`
   let x = 3;
@@ -9,4 +10,4 @@ let usedFeatures = extract.withAllFeatures(`
 
 let errors = check.checkFeatureCompatibility(usedFeatures, ['ie11', 'chrome54'])
 
-console.log(JSON.stringify(errors, null, 4))
+output.outputErrors(errors)
