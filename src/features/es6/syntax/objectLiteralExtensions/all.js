@@ -1,9 +1,9 @@
-let computedAccessors = require('./computedAccessors.js');
-let computedProperties = require('./computedProperties.js');
-let computedShorthandMethods = require('./computedShorthandMethods.js');
-let shorthandMethods = require('./shorthandMethods.js');
-let shorthandProperties = require('./shorthandProperties.js');
-let stringKeyedShorthandMethods = require('./stringKeyedShorthandMethods.js');
+let computedAccessors = require('./computedAccessors.js')
+let computedProperties = require('./computedProperties.js')
+let computedShorthandMethods = require('./computedShorthandMethods.js')
+let shorthandMethods = require('./shorthandMethods.js')
+let shorthandProperties = require('./shorthandProperties.js')
+let stringKeyedShorthandMethods = require('./stringKeyedShorthandMethods.js')
 
 module.exports = [].concat(
   computedAccessors.func,
@@ -12,4 +12,4 @@ module.exports = [].concat(
   shorthandMethods.func,
   shorthandProperties.func,
   stringKeyedShorthandMethods.func
-);
+)

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/compat.js",
     "test": "mocha --recursive test",
-    "lint": "eslint src/ test/"
+    "lint": "standard"
   },
   "author": "Jason Gardella <jason.a.gardella@gmail.com>",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "estraverse": "^4.2.0"
   },
   "devDependencies": {
-    "eslint": "^3.8.0",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "standard": "^8.4.0"
   }
 }

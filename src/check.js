@@ -1,4 +1,4 @@
-let compatTable = require('./compatTable.js');
+let compatTable = require('./compatTable.js')
 
 /**
  * Checks for feature compatibility errors.
@@ -7,27 +7,27 @@ let compatTable = require('./compatTable.js');
  * @return Array detected compatiblilty errors
  */
 exports.checkFeatureCompatibility = (usedFeatures, envs) => {
-  let errors = [];
+  let errors = []
 
   usedFeatures.forEach((feature) => {
     if (!compatTable.featureDefined(feature.type)) {
-      errors.push(Object.assign({}, feature, { error: 'featureUndefined' }));
+      errors.push(Object.assign({}, feature, { error: 'featureUndefined' }))
     } else {
-      let error = Object.assign({}, feature, { error: 'incompatibility', incompatEnvs: [], partialEnvs: [] });
+      let error = Object.assign({}, feature, { error: 'incompatibility', incompatEnvs: [], partialEnvs: [] })
       envs.forEach((env) => {
-        const featureSupported = compatTable.featureSupportedByEnv(feature.type, env);
+        const featureSupported = compatTable.featureSupportedByEnv(feature.type, env)
         if (featureSupported === 'flag' || typeof featureSupported === 'number') {
-          error.partialEnvs.push(env);
+          error.partialEnvs.push(env)
         } else if (featureSupported === false) {
-          error.incompatEnvs.push(env);
+          error.incompatEnvs.push(env)
         }
-      });
+      })
 
       if (error.incompatEnvs.length || error.partialEnvs.length > 0) {
-        errors.push(error);
+        errors.push(error)
       }
     }
-  });
+  })
 
-  return errors;
+  return errors
 }

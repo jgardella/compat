@@ -1,6 +1,6 @@
-const TYPE = 'rest parameters';
+const TYPE = 'rest parameters'
 
-exports.type = TYPE;
+exports.type = TYPE
 
 /**
  * Detects usage of ES6 rest parameters.
@@ -8,6 +8,6 @@ exports.type = TYPE;
 exports.func = (node, parent) => {
   // not sure if this if a sufficient check for rest parameters
   if (node.type === 'RestElement') {
-    return Object.assign({}, node.loc, { type: TYPE });
+    return Object.assign({}, node.loc, { type: TYPE })
   }
 }
