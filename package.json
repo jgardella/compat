@@ -12,7 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "esprima": "^3.1.0",
-    "estraverse": "^4.2.0"
+    "estraverse": "^4.2.0",
+    "yargs": "^6.2.0"
   },
   "devDependencies": {
     "mocha": "^3.1.2",
