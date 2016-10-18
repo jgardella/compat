@@ -18,14 +18,17 @@ const argv =
       'target': 'file(s) and directories containing files to check for compatibility',
       'env': 'environment(s) to check for compatiblity with',
       'feature': 'feature(s) or feature group(s) to check for',
-      'ignoreFeature': 'feature(s) to ignore'
+      'ignoreFeature': 'feature(s) to ignore',
+      'config': 'path to config file (must have .json extension)'
     })
     .default({
       'target': ['.'],
       'env': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
       'feature': ['all'],
-      'ignoreFeature': []
+      'ignoreFeature': [],
+      'config': './.compatrc.json'
     })
+    .config()
     .help()
     .argv
 
