@@ -11,15 +11,15 @@ let destructuringParameters = require('./destructuringParameters.js')
 let newTarget = require('./newTarget.js')
 
 module.exports = [].concat(
-  defaultFunctionParams.func,
-  restParameters.func,
-  spreadOperator.func,
+  defaultFunctionParams,
+  restParameters,
+  spreadOperator,
   objectLiteralExtensions,
-  forOfLoops.func,
+  forOfLoops,
   octalAndBinaryLiterals,
-  templateLiterals.func,
-  destructuringDeclarations.func,
-  destructuringAssignment.func,
-  destructuringParameters.func,
-  newTarget.func
+  templateLiterals,
+  destructuringDeclarations,
+  destructuringAssignment,
+  destructuringParameters,
+  newTarget
 )

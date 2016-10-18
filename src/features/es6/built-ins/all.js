@@ -8,12 +8,12 @@ let promise = require('./promise.js')
 let symbol = require('./symbol.js')
 
 module.exports = [
-  map.func,
-  set.func,
-  weakMap.func,
-  weakSet.func,
-  proxy.func,
-  reflect.func,
-  promise.func,
-  symbol.func
+  map,
+  set,
+  weakMap,
+  weakSet,
+  proxy,
+  reflect,
+  promise,
+  symbol
 ]

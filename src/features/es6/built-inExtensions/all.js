@@ -9,13 +9,13 @@ let mathMethods = require('./mathMethods.js')
 let datePrototypeSymbol = require('./datePrototypeSymbol.js')
 
 module.exports = [
-  objectStaticMethods.func,
-  stringStaticMethods.func,
-  stringPrototypeMethods.func,
-  regExpPrototypeProperties.func,
-  arrayStaticMethods.func,
-  arrayPrototypeMethods.func,
-  numberProperties.func,
-  mathMethods.func,
-  datePrototypeSymbol.func
+  objectStaticMethods,
+  stringStaticMethods,
+  stringPrototypeMethods,
+  regExpPrototypeProperties,
+  arrayStaticMethods,
+  arrayPrototypeMethods,
+  numberProperties,
+  mathMethods,
+  datePrototypeSymbol
 ]

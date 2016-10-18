@@ -6,10 +6,10 @@ let shorthandProperties = require('./shorthandProperties.js')
 let stringKeyedShorthandMethods = require('./stringKeyedShorthandMethods.js')
 
 module.exports = [].concat(
-  computedAccessors.func,
-  computedProperties.func,
-  computedShorthandMethods.func,
-  shorthandMethods.func,
-  shorthandProperties.func,
-  stringKeyedShorthandMethods.func
+  computedAccessors,
+  computedProperties,
+  computedShorthandMethods,
+  shorthandMethods,
+  shorthandProperties,
+  stringKeyedShorthandMethods
 )
