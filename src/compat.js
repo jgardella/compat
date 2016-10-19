@@ -54,10 +54,7 @@ filesToCheck.forEach((fileName) => {
 
   let usedFeatures = extract.withFeatures(fileContents, featuresToExtract)
   let errors = check.checkFeatureCompatibility(usedFeatures, argv.env)
-  if (Object.getOwnPropertyNames(errors).length > 0) {
-    console.log('In file "' + fileName + '":')
-  }
-  output.outputErrors(errors)
+  output.outputErrors(errors, fileName)
 })
 
 function getFilesInDirectory (path, recursive) {

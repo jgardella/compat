@@ -1,8 +1,14 @@
-module.exports.outputErrors = (errors) => {
+let colors = require('colors')
+
+module.exports.outputErrors = (errors, fileName) => {
+  const numErrors = Object.getOwnPropertyNames(errors).length
+  if (numErrors > 0) {
+    console.log(colors.bold('In file "' + fileName + '": ') + colors.red(numErrors + ' errors'))
+  }
   Object.keys(errors).forEach((errorKey) => {
     const error = errors[errorKey]
     if (error.error === 'featureUndefined') {
-      console.log('undefined feature: ' + errorKey)
+      console.log(colors.blue('undefined feature: ' + errorKey))
     } else if (error.error === 'incompatibility') {
       const incompatEnvString = error.incompatEnvs.join(', ')
       const partialEnvString = error.partialEnvs.join(', ')
@@ -16,14 +22,14 @@ module.exports.outputErrors = (errors) => {
           }).reduce((prev, curr, idx) => {
             return idx === 0 ? curr : prev + ', ' + curr
           }, '')
-        console.log('feature: ' + errorKey)
-        console.log('used on lines: ' + linesUsed)
+        console.log('  feature: ' + errorKey)
+        console.log('  used on line(s): ' + linesUsed)
       }
       if (incompatEnvString.length > 0) {
-        console.log('  incompatible environments:         ' + incompatEnvString)
+        console.log(colors.red('    incompatible: ' + incompatEnvString))
       }
       if (partialEnvString.length > 0) {
-        console.log('  partially compatible environments: ' + partialEnvString)
+        console.log(colors.yellow('    partial:      ' + partialEnvString))
       }
     }
   })
