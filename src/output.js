@@ -69,8 +69,12 @@ module.exports.outputSupportedFeatureGroups = () => {
 }
 
 module.exports.outputEnabledFeatures = (enabledFeatures) => {
-  console.log(colors.bold('Enabled Features: '))
-  enabledFeatures.forEach((feature) => {
-    console.log('  ' + feature.type)
-  })
+  if (enabledFeatures.length > 0) {
+    console.log(colors.bold('Enabled Features: '))
+    enabledFeatures.forEach((feature) => {
+      console.log('  ' + feature.type)
+    })
+  } else {
+    console.log(colors.bold('Enabled Features: ') + 'none')
+  }
 }

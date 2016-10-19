@@ -1,6 +1,5 @@
-let all = require('./features/all.js')
-
 const featureGroupMap = {
+  'all': './features/all.js',
   'es6': './features/es6/all.js',
   'es6-syntax': './features/es6/syntax/all.js',
   'es6-syntax-objectLiteralExtensions': './features/es6/syntax/objectLiteralExtensions/all.js',
@@ -75,7 +74,7 @@ function flattenGroupToFeatures (group) {
 function createFeatureMap () {
   let featureMap = {}
 
-  flattenGroupToFeatures(all.features).forEach((feature) => {
+  flattenGroupToFeatures(require(featureGroupMap['all']).features).forEach((feature) => {
     featureMap[feature.type] = feature
   })
 
