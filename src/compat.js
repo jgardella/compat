@@ -53,10 +53,10 @@ const filesToCheck =
     })
   )
 
+const featuresToExtract = features.getFeatures(argv.feature, argv.ignoreFeature)
+
 filesToCheck.forEach((fileName) => {
   let fileContents = fs.readFileSync(fileName, 'utf8')
-  let featuresToExtract = features.getFeatures(argv.feature, argv.ignoreFeature)
-
   let usedFeatures = extract.withFeatures(fileContents, featuresToExtract)
   let errors = check.checkFeatureCompatibility(usedFeatures, argv.env)
   output.outputErrors(errors, fileName)
