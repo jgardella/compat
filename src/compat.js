@@ -16,6 +16,7 @@ const argv =
       'config': 'c'
     })
     .array(['target', 'env', 'feature', 'ignoreFeature'])
+    .boolean(['supportedFeatures'])
     .describe({
       'target': 'file(s) and directories containing files to check for compatibility',
       'env': 'environment(s) to check for compatiblity with',
@@ -34,6 +35,10 @@ const argv =
     .config()
     .help()
     .argv
+
+if (argv.supportedFeatures) {
+  output.outputSupportedFeatures()
+}
 
 const filesToCheck =
   [].concat.apply([],

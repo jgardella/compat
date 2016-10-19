@@ -1,4 +1,5 @@
 let colors = require('colors')
+let supportedFeatures = require('./supportedFeatures.json')
 
 module.exports.outputErrors = (errors, fileName) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
@@ -32,5 +33,21 @@ module.exports.outputErrors = (errors, fileName) => {
         console.log(colors.yellow('    partial:      ' + partialEnvString))
       }
     }
+  })
+}
+
+module.exports.outputSupportedFeatures = () => {
+  Object.keys(supportedFeatures).forEach((key) => {
+    const featureGroup = supportedFeatures[key]
+    console.log(colors.green(key))
+    Object.keys(featureGroup).forEach((key) => {
+      const subtests = featureGroup[key]
+      console.log(colors.green('  ' + key))
+      if (subtests !== undefined) {
+        subtests.forEach((subtest) => {
+          console.log(colors.yellow('    ' + subtest))
+        })
+      }
+    })
   })
 }

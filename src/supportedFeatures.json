@@ -1,0 +1,121 @@
+{
+  "es6": {
+   "default function parameters": [],
+    "rest parameters": [],
+    "spread (...) operator": [],
+    "object literal extensions": [
+      "computed properties",
+      "shorthand properties",
+      "shorthand methods",
+      "string-keyed shorthand methods",
+      "computed shorthand methods",
+      "computed accessors"
+    ],
+    "for..of loops": [],
+    "octal and binary literals": [
+      "octal literals",
+      "binary literals"
+    ],
+    "template literals": [],
+    "RegExp \"y\" and \"u\" flags": [],
+    "destructuring, declarations": [],
+    "destructuring, assignment": [],
+    "destructuring, parameters": [],
+    "Unicode code point escapes": [],
+    "new.target": [],
+    "const": [],
+    "let": [],
+    "block-level function declaration": [],
+    "arrow functions": [],
+    "class": [],
+    "super": [],
+    "generators": [],
+    "Map": [],
+    "Set": [],
+    "WeakMap": [],
+    "WeakSet": [],
+    "Proxy": [],
+    "Reflect": [],
+    "Promise": [],
+    "Symbol": [],
+    "Object static methods": [
+      "Object.assign",
+      "Object.is",
+      "Object.getOwnPropertySymbols",
+      "Object.setPrototypeOf"
+    ],
+    "String static methods": [
+      "String.raw",
+      "String.fromCodePoint"
+    ],
+    "String.prototype methods": [
+      "String.prototype.codePointAt",
+      "String.prototype.normalize",
+      "String.prototype.repeat",
+      "String.prototype.startsWith",
+      "String.prototype.endsWith",
+      "String.prototype.includes"
+    ],
+    "RegExp.prototype properties": [
+      "RegExp.prototype.flags",
+      "RegExp.prototype[Symbol.match]",
+      "RegExp.prototype[Symbol.replace]",
+      "RegExp.prototype[Symbol.split]",
+      "RegExp.prototype[Symbol.search]"
+    ],
+    "Array static methods": [
+      "Array.from",
+      "Array.of"
+    ],
+    "Array.prototype methods": [
+      "Array.prototype.copyWithin",
+      "Array.prototype.find",
+      "Array.prototype.findIndex",
+      "Array.prototype.fill",
+      "Array.prototype.keys",
+      "Array.prototype.values",
+      "Array.prototype.entries"
+    ],
+    "Number properties": [
+      "Number.isFinite",
+      "Number.isInteger",
+      "Number.isSafeInteger",
+      "Number.isNaN",
+      "Number.EPSILON",
+      "Number.MIN_SAFE_INTEGER",
+      "Number.MAX_SAFE_INTEGER"
+    ],
+    "Math methods": [
+      "Math.clz32",
+      "Math.imul",
+      "Math.sign",
+      "Math.log10",
+      "Math.log2",
+      "Math.log1p",
+      "Math.expm1",
+      "Math.cosh",
+      "Math.sinh",
+      "Math.tanh",
+      "Math.acosh",
+      "Math.asinh",
+      "Math.atanh",
+      "Math.trunc",
+      "Math.fround",
+      "Math.cbrt",
+      "Math.hypot"
+    ],
+    "Date.prototype[Symbol.toPrimitive]": [],
+    "Array is subclassable": [],
+    "RegExp is subclassable": [],
+    "Function is subclassable": [],
+    "Promise is subclassable": [],
+    "miscellaneous subclassables": [
+      "Boolean is subclassable",
+      "Number is subclassable",
+      "String is subclassable",
+      "Error is subclassable",
+      "Map is subclassable",
+      "Set is subclassable"
+    ]
+  }
+}
