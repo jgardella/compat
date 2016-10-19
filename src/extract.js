@@ -3,7 +3,8 @@ let estraverse = require('estraverse')
 let allFeatures = require('./features/all.js')
 
 const esprimaOptions = {
-  loc: true
+  loc: true,
+  tolerant: true
 }
 
 /**
@@ -13,7 +14,8 @@ const esprimaOptions = {
  * @param features array of features to look for
  */
 function withFeatures (program, features) {
-  return traverseAST(esprima.parse(program, esprimaOptions), features)
+  const ast = esprima.parse(program, esprimaOptions)
+  return traverseAST(ast, features)
 }
 
 /**
