@@ -1,5 +1,5 @@
 let colors = require('colors')
-let supportedFeatures = require('./supportedFeatures.json')
+let all = require('./features/all.js')
 
 module.exports.outputErrors = (errors, fileName) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
@@ -37,17 +37,18 @@ module.exports.outputErrors = (errors, fileName) => {
 }
 
 module.exports.outputSupportedFeatures = () => {
-  Object.keys(supportedFeatures).forEach((key) => {
-    const featureGroup = supportedFeatures[key]
-    console.log(colors.green(key))
-    Object.keys(featureGroup).forEach((key) => {
-      const subtests = featureGroup[key]
-      console.log(colors.green('  ' + key))
-      if (subtests !== undefined) {
-        subtests.forEach((subtest) => {
-          console.log(colors.yellow('    ' + subtest))
-        })
-      }
-    })
+  outputSupportedFeaturesTree(all.features, 0)
+}
+
+function outputSupportedFeaturesTree (node, level) {
+  const indentation = Array(level * 2 + 1).join(' ')
+  Object.keys(node).forEach((key) => {
+    const child = node[key]
+    if (child.type === undefined) {
+      console.log(colors.bold(indentation + key))
+      outputSupportedFeaturesTree(child, level + 1)
+    } else {
+      console.log(indentation + child.type)
+    }
   })
 }

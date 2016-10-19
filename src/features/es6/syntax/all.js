@@ -10,16 +10,19 @@ let destructuringAssignment = require('./destructuringAssignment.js')
 let destructuringParameters = require('./destructuringParameters.js')
 let newTarget = require('./newTarget.js')
 
-module.exports = [].concat(
-  defaultFunctionParams,
-  restParameters,
-  spreadOperator,
-  objectLiteralExtensions,
-  forOfLoops,
-  octalAndBinaryLiterals,
-  templateLiterals,
-  destructuringDeclarations,
-  destructuringAssignment,
-  destructuringParameters,
-  newTarget
-)
+module.exports.groupName = 'Syntax'
+
+let features = {}
+features[defaultFunctionParams.type] = defaultFunctionParams
+features[restParameters.type] = restParameters
+features[spreadOperator.type] = spreadOperator
+features[objectLiteralExtensions.groupName] = objectLiteralExtensions.features
+features[forOfLoops.type] = forOfLoops
+features[octalAndBinaryLiterals.groupName] = octalAndBinaryLiterals.features
+features[templateLiterals.type] = templateLiterals
+features[destructuringDeclarations.type] = destructuringDeclarations
+features[destructuringAssignment.type] = destructuringAssignment
+features[destructuringParameters.type] = destructuringParameters
+features[newTarget.type] = newTarget
+
+module.exports.features = features

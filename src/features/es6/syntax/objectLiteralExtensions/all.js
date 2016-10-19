@@ -5,11 +5,14 @@ let shorthandMethods = require('./shorthandMethods.js')
 let shorthandProperties = require('./shorthandProperties.js')
 let stringKeyedShorthandMethods = require('./stringKeyedShorthandMethods.js')
 
-module.exports = [].concat(
-  computedAccessors,
-  computedProperties,
-  computedShorthandMethods,
-  shorthandMethods,
-  shorthandProperties,
-  stringKeyedShorthandMethods
-)
+module.exports.groupName = 'Object Literal Extensions'
+
+let features = {}
+features[computedAccessors.type] = computedAccessors
+features[computedProperties.type] = computedProperties
+features[computedShorthandMethods.type] = computedShorthandMethods
+features[shorthandMethods.type] = shorthandMethods
+features[shorthandProperties.type] = shorthandProperties
+features[stringKeyedShorthandMethods.type] = stringKeyedShorthandMethods
+
+module.exports.features = features

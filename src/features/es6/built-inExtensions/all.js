@@ -8,14 +8,17 @@ let numberProperties = require('./numberProperties.js')
 let mathMethods = require('./mathMethods.js')
 let datePrototypeSymbol = require('./datePrototypeSymbol.js')
 
-module.exports = [
-  objectStaticMethods,
-  stringStaticMethods,
-  stringPrototypeMethods,
-  regExpPrototypeProperties,
-  arrayStaticMethods,
-  arrayPrototypeMethods,
-  numberProperties,
-  mathMethods,
-  datePrototypeSymbol
-]
+module.exports.groupName = 'Built-In Extensions'
+
+let features = {}
+features[objectStaticMethods.type] = objectStaticMethods
+features[stringStaticMethods.type] = stringStaticMethods
+features[stringPrototypeMethods.type] = stringPrototypeMethods
+features[regExpPrototypeProperties.type] = regExpPrototypeProperties
+features[arrayStaticMethods.type] = arrayStaticMethods
+features[arrayPrototypeMethods.type] = arrayPrototypeMethods
+features[numberProperties.type] = numberProperties
+features[mathMethods.type] = mathMethods
+features[datePrototypeSymbol.type] = datePrototypeSymbol
+
+module.exports.features = features
