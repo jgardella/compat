@@ -16,7 +16,7 @@ const argv =
       'config': 'c'
     })
     .array(['target', 'env', 'feature', 'ignoreFeature'])
-    .boolean(['supportedFeatures'])
+    .boolean(['supportedFeatures', 'enabledFeatures'])
     .describe({
       'target': 'file(s) and directories containing files to check for compatibility',
       'env': 'environment(s) to check for compatiblity with',
@@ -54,6 +54,10 @@ const filesToCheck =
   )
 
 const featuresToExtract = features.getFeatures(argv.feature, argv.ignoreFeature)
+
+if (argv.enabledFeatures) {
+  output.outputEnabledFeatures(featuresToExtract)
+}
 
 filesToCheck.forEach((fileName) => {
   let fileContents = fs.readFileSync(fileName, 'utf8')

@@ -52,3 +52,10 @@ function outputSupportedFeaturesTree (node, level) {
     }
   })
 }
+
+module.exports.outputEnabledFeatures = (enabledFeatures) => {
+  console.log(colors.bold('Enabled Features: '))
+  enabledFeatures.forEach((feature) => {
+    console.log('  ' + feature.type)
+  })
+}
