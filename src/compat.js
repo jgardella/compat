@@ -36,6 +36,7 @@ const argv =
       'config': './.compatrc.json'
     })
     .config()
+    .version()
     .help()
     .argv
 
