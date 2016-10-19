@@ -11,7 +11,9 @@ const argv =
       'target': 't',
       'env': 'e',
       'feature': 'f',
-      'ignoreFeature': 'i'
+      'ignoreFeature': 'i',
+      'recursive': 'r',
+      'config': 'c'
     })
     .array(['target', 'env', 'feature', 'ignoreFeature'])
     .describe({
@@ -19,6 +21,7 @@ const argv =
       'env': 'environment(s) to check for compatiblity with',
       'feature': 'feature(s) or feature group(s) to check for',
       'ignoreFeature': 'feature(s) to ignore',
+      'recursive': 'enters directories specified in target recursively',
       'config': 'path to config file (must have .json extension)'
     })
     .default({
@@ -37,9 +40,8 @@ const filesToCheck =
     argv.target.map((fileName) => {
       const isDir = fs.lstatSync(fileName).isDirectory()
       if (isDir) {
-        return fs.readdirSync(fileName)
-          .filter((dirFileName) => { return dirFileName.endsWith('.js') })
-          .map((dirFileName) => { return fileName + '/' + dirFileName })
+        return getFilesInDirectory(fileName, argv.recursive)
+          .filter((fileName) => { return fileName.endsWith('.js') })
       } else {
         return [fileName]
       }
@@ -52,6 +54,30 @@ filesToCheck.forEach((fileName) => {
 
   let usedFeatures = extract.withFeatures(fileContents, featuresToExtract)
   let errors = check.checkFeatureCompatibility(usedFeatures, argv.env)
-  console.log('In file "' + fileName + '":')
+  if (Object.getOwnPropertyNames(errors).length > 0) {
+    console.log('In file "' + fileName + '":')
+  }
   output.outputErrors(errors)
 })
+
+function getFilesInDirectory (path, recursive) {
+  if (!path.endsWith('/')) {
+    path = path + '/'
+  }
+  let filesInDir = fs.readdirSync(path)
+
+  if (recursive) {
+    return [].concat.apply([],
+      filesInDir.map((file) => {
+        const isDir = fs.lstatSync(path + '/' + file).isDirectory()
+        if (isDir) {
+          return getFilesInDirectory(path + file + '/', recursive)
+        } else {
+          return [path + file]
+        }
+      })
+    )
+  } else {
+    return filesInDir
+  }
+}
