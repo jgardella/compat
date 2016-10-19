@@ -5,7 +5,7 @@ let builtIns = require('./built-ins/all.js')
 let builtInExtensions = require('./built-inExtensions/all.js')
 let subclassing = require('./built-inExtensions/all.js')
 
-module.exports.groupName = 'es6'
+module.exports.groupName = 'ES6'
 
 let features = {}
 features[syntax.groupName] = syntax.features

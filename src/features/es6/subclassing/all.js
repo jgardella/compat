@@ -13,10 +13,4 @@ features[functionSubclassing.type] = functionSubclassing
 features[promiseSubclassing.type] = promiseSubclassing
 features[miscSubclassing.groupName] = miscSubclassing.features
 
-module.exports = [
-  arraySubclassing,
-  regExpSubclassing,
-  functionSubclassing,
-  promiseSubclassing,
-  miscSubclassing
-]
+module.exports.features = features

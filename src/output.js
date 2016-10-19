@@ -1,5 +1,6 @@
 let colors = require('colors')
 let all = require('./features/all.js')
+let features = require('./features.js')
 
 module.exports.outputErrors = (errors, fileName) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
@@ -37,7 +38,8 @@ module.exports.outputErrors = (errors, fileName) => {
 }
 
 module.exports.outputSupportedFeatures = () => {
-  outputSupportedFeaturesTree(all.features, 0)
+  console.log(colors.bold('Supported Features: '))
+  outputSupportedFeaturesTree(all.features, 1)
 }
 
 function outputSupportedFeaturesTree (node, level) {
@@ -50,6 +52,19 @@ function outputSupportedFeaturesTree (node, level) {
     } else {
       console.log(indentation + child.type)
     }
+  })
+}
+
+module.exports.outputSupportedFeatureGroups = () => {
+  const featureGroupMap = features.getFlattenedFeatureGroupMap()
+
+  console.log(colors.bold('Supported Feature Groups: '))
+  Object.keys(featureGroupMap).forEach((featureGroupName) => {
+    const featureGroup = featureGroupMap[featureGroupName]
+    console.log('  ' + featureGroupName)
+    featureGroup.forEach((feature) => {
+      console.log('    ' + feature.type)
+    })
   })
 }
 

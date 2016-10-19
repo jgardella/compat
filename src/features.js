@@ -1,26 +1,60 @@
 let all = require('./features/all.js')
-let es6 = require('./features/es6/all.js')
+
+const featureGroupMap = {
+  'es6': './features/es6/all.js',
+  'es6-syntax': './features/es6/syntax/all.js',
+  'es6-syntax-objectLiteralExtensions': './features/es6/syntax/objectLiteralExtensions/all.js',
+  'es6-syntax-octalAndBinaryLiterals': './features/es6/syntax/octalAndBinaryLiterals/all.js',
+  'es6-bindings': './features/es6/bindings/all.js',
+  'es6-functions': './features/es6/functions/all.js',
+  'es6-builtIns': './features/es6/built-ins/all.js',
+  'es6-builtInExtensions': './features/es6/built-inExtensions/all.js',
+  'es6-subclassing': './features/es6/subclassing/all.js',
+  'es6-subclassing-miscSubclassables': './features/es6/subclassing/miscSubclassables/all.js'
+}
+
+const featureMap = createFeatureMap()
 
 module.exports.getFeatures = (featureIds, ignoreFeatureIds) => {
-  let featureGroups = []
-
-  if (featureIds.indexOf('all') > -1) {
-    featureGroups.push(all.features)
-  } else {
-    if (featureIds.indexOf('es6') > -1) {
-      featureGroups.push(es6.features)
-    }
-  }
-
-  let features = [].concat.apply([],
-    featureGroups.map((group) => { return flattenGroupToFeatures(group) })
-  )
+  let features = featureIdsToFeatures(featureIds)
+  let featuresToIgnore = featureIdsToFeatures(ignoreFeatureIds)
 
   return features.filter((feature) => {
-    return !ignoreFeatureIds.some((ignoreFeature) => {
-      return feature.type === ignoreFeature
+    return !featuresToIgnore.some((ignoreFeature) => {
+      return feature.type === ignoreFeature.type
     })
   })
+}
+
+module.exports.getFlattenedFeatureGroupMap = () => {
+  let flattenedMap = {}
+
+  Object.keys(featureGroupMap).forEach((key) => {
+    console.log(key)
+    flattenedMap[key] = flattenGroupToFeatures(require(featureGroupMap[key]).features)
+  })
+
+  return flattenedMap
+}
+
+function featureIdsToFeatures (featureIds) {
+  let features = []
+  let featureGroups = []
+
+  featureIds.forEach((featureId) => {
+    if (featureGroupMap[featureId] !== undefined) {
+      featureGroups.push(require(featureGroupMap[featureId]).features)
+    } else {
+      features.push(featureMap[featureId])
+    }
+  })
+
+  features =
+    [].concat.apply(features,
+      featureGroups.map((group) => { return flattenGroupToFeatures(group) })
+    ).filter((v, i, a) => { return a.indexOf(v) === i })
+
+  return features
 }
 
 function flattenGroupToFeatures (group) {
@@ -36,4 +70,14 @@ function flattenGroupToFeatures (group) {
   })
 
   return features
+}
+
+function createFeatureMap () {
+  let featureMap = {}
+
+  flattenGroupToFeatures(all.features).forEach((feature) => {
+    featureMap[feature.type] = feature
+  })
+
+  return featureMap
 }

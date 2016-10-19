@@ -16,13 +16,16 @@ const argv =
       'config': 'c'
     })
     .array(['target', 'env', 'feature', 'ignoreFeature'])
-    .boolean(['supportedFeatures', 'enabledFeatures'])
+    .boolean(['supportedFeatures', 'supportedFeatureGroups', 'enabledFeatures'])
     .describe({
       'target': 'file(s) and directories containing files to check for compatibility',
       'env': 'environment(s) to check for compatiblity with',
-      'feature': 'feature(s) or feature group(s) to check for',
-      'ignoreFeature': 'feature(s) to ignore',
+      'feature': 'feature(s) and/or feature group(s) to check for',
+      'ignoreFeature': 'feature(s) and/or feature group(s) to ignore',
       'recursive': 'enters directories specified in target recursively',
+      'supportedFeatures': 'prints out tree of supported features',
+      'supportedFeatureGroups': 'prints out supported feature groups and their features',
+      'enabledFeatures': 'prints out the features that will be enabled for detection with the provided flags',
       'config': 'path to config file (must have .json extension)'
     })
     .default({
@@ -38,6 +41,10 @@ const argv =
 
 if (argv.supportedFeatures) {
   output.outputSupportedFeatures()
+}
+
+if (argv.supportedFeatureGroups) {
+  output.outputSupportedFeatureGroups()
 }
 
 const filesToCheck =
