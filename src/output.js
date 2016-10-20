@@ -1,7 +1,7 @@
 let colors = require('colors')
 let all = require('./features/all.js')
 let features = require('./features.js')
-let envs = require('./envs.json')
+let envs = require('./envs.js')
 
 module.exports.outputErrors = (errors, fileName) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
@@ -82,11 +82,17 @@ module.exports.outputEnabledFeatures = (enabledFeatures) => {
 
 module.exports.outputSupportedEnvs = () => {
   console.log(colors.bold('Supported Envs: '))
-  Object.keys(envs).forEach((envGroupId) => {
+  Object.keys(envs.envs).forEach((envGroupId) => {
     const envGroup = envs[envGroupId]
     console.log('  ' + colors.bold(envGroupId))
     Object.keys(envGroup).forEach((envId) => {
       console.log('    ' + envId)
     })
+  })
+}
+
+module.exports.outputUndefinedEnvs = (undefinedEnvs) => {
+  undefinedEnvs.forEach((envId) => {
+    console.log(colors.red('Environment "' + envId + '" is not defined. Ignoring.'))
   })
 }

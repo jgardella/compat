@@ -4,6 +4,7 @@ let extract = require('./extract.js')
 let check = require('./check.js')
 let output = require('./output.js')
 let features = require('./features.js')
+let envs = require('./envs.js')
 
 const argv =
   yargs
@@ -52,6 +53,17 @@ if (argv.supportedEnvs) {
   output.outputSupportedEnvs()
 }
 
+const undefinedEnvs = []
+const definedEnvs = argv.envs.filter((envId) => {
+  if (envs.isEnvDefined(envId)) {
+    return true
+  }
+  undefinedEnvs.push(envId)
+  return false
+})
+
+output.outputUndefinedEnvs(undefinedEnvs)
+
 const filesToCheck =
   [].concat.apply([],
     argv.target.map((fileName) => {
@@ -74,7 +86,7 @@ if (argv.enabledFeatures) {
 filesToCheck.forEach((fileName) => {
   let fileContents = fs.readFileSync(fileName, 'utf8')
   let usedFeatures = extract.withFeatures(fileContents, featuresToExtract)
-  let errors = check.checkFeatureCompatibility(usedFeatures, argv.envs)
+  let errors = check.checkFeatureCompatibility(usedFeatures, definedEnvs)
   output.outputErrors(errors, fileName)
 })
 
