@@ -20,6 +20,9 @@ exports.featureDefined = (feature) => {
   return compatTable[feature] !== undefined
 }
 
+/* Built using kangax's compat-table
+ * https://github.com/kangax/compat-table
+ */
 const compatTable = {
   'proper tail calls (tail call optimisation)_direct recursion': {
     'tr': {

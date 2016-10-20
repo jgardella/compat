@@ -9,19 +9,19 @@ const argv =
   yargs
     .alias({
       'target': 't',
-      'env': 'e',
-      'feature': 'f',
-      'ignoreFeature': 'i',
+      'envs': 'e',
+      'features': 'f',
+      'ignoreFeatures': 'i',
       'recursive': 'r',
       'config': 'c'
     })
-    .array(['target', 'env', 'feature', 'ignoreFeature'])
-    .boolean(['supportedFeatures', 'supportedFeatureGroups', 'enabledFeatures'])
+    .array(['target', 'envs', 'features', 'ignoreFeatures'])
+    .boolean(['supportedFeatures', 'supportedFeatureGroups', 'enabledFeatures', 'supportedEnvs'])
     .describe({
       'target': 'file(s) and directories containing files to check for compatibility',
-      'env': 'environment(s) to check for compatiblity with',
-      'feature': 'feature(s) and/or feature group(s) to check for',
-      'ignoreFeature': 'feature(s) and/or feature group(s) to ignore',
+      'envs': 'environment(s) to check for compatiblity with',
+      'features': 'feature(s) and/or feature group(s) to check for',
+      'ignoreFeatures': 'feature(s) and/or feature group(s) to ignore',
       'recursive': 'enters directories specified in target recursively',
       'supportedFeatures': 'prints out tree of supported features',
       'supportedFeatureGroups': 'prints out supported feature groups and their features',
@@ -30,9 +30,9 @@ const argv =
     })
     .default({
       'target': ['.'],
-      'env': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
-      'feature': ['all'],
-      'ignoreFeature': [],
+      'envs': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
+      'features': ['all'],
+      'ignoreFeatures': [],
       'config': './.compatrc.json'
     })
     .config()
@@ -48,6 +48,10 @@ if (argv.supportedFeatureGroups) {
   output.outputSupportedFeatureGroups()
 }
 
+if (argv.supportedEnvs) {
+  output.outputSupportedEnvs()
+}
+
 const filesToCheck =
   [].concat.apply([],
     argv.target.map((fileName) => {
@@ -61,7 +65,7 @@ const filesToCheck =
     })
   )
 
-const featuresToExtract = features.getFeatures(argv.feature, argv.ignoreFeature)
+const featuresToExtract = features.getFeatures(argv.features, argv.ignoreFeatures)
 
 if (argv.enabledFeatures) {
   output.outputEnabledFeatures(featuresToExtract)
@@ -70,7 +74,7 @@ if (argv.enabledFeatures) {
 filesToCheck.forEach((fileName) => {
   let fileContents = fs.readFileSync(fileName, 'utf8')
   let usedFeatures = extract.withFeatures(fileContents, featuresToExtract)
-  let errors = check.checkFeatureCompatibility(usedFeatures, argv.env)
+  let errors = check.checkFeatureCompatibility(usedFeatures, argv.envs)
   output.outputErrors(errors, fileName)
 })
 

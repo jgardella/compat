@@ -1,6 +1,7 @@
 let colors = require('colors')
 let all = require('./features/all.js')
 let features = require('./features.js')
+let envs = require('./envs.json')
 
 module.exports.outputErrors = (errors, fileName) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
@@ -77,4 +78,15 @@ module.exports.outputEnabledFeatures = (enabledFeatures) => {
   } else {
     console.log(colors.bold('Enabled Features: ') + 'none')
   }
+}
+
+module.exports.outputSupportedEnvs = () => {
+  console.log(colors.bold('Supported Envs: '))
+  Object.keys(envs).forEach((envGroupId) => {
+    const envGroup = envs[envGroupId]
+    console.log('  ' + colors.bold(envGroupId))
+    Object.keys(envGroup).forEach((envId) => {
+      console.log('    ' + envId)
+    })
+  })
 }
