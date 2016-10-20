@@ -10,6 +10,6 @@ exports.type = TYPE
 exports.func = (node, parent) => {
   // not sure if this if a sufficient check for spread operator
   if (node.type === 'SpreadElement') {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

@@ -22,6 +22,6 @@ exports.func = (node, parent) => {
           node.property.property.name === 'split' ||
           node.property.property.name === 'search')))
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

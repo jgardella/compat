@@ -20,6 +20,6 @@ exports.func = (node, parent) => {
       node.property.name === 'endsWith' ||
       node.property.name === 'includes')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

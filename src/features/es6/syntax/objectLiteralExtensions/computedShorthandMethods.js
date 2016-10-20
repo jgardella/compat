@@ -13,6 +13,6 @@ exports.func = (node, parent) => {
       node.method &&
       node.computed &&
       node.kind === 'init') {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

@@ -11,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'ClassDeclaration' ||
       node.type === 'ClassExpression'
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

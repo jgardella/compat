@@ -28,6 +28,6 @@ exports.func = (node, parent) => {
       node.property.name === 'cbrt' ||
       node.property.name === 'hypot')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

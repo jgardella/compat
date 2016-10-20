@@ -12,6 +12,6 @@ exports.func = (node, parent) => {
       node.object.type === 'Identifier' &&
       node.object.name === 'Reflect'
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

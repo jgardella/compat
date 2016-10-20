@@ -18,6 +18,6 @@ exports.func = (node, parent) => {
       node.property.name === 'MIN_SAFE_INTEGER' ||
       node.property.name === 'MAX_SAFE_INTEGER')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

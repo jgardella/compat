@@ -17,6 +17,6 @@ exports.func = (node, parent) => {
       node.property.object.name === 'Symbol' &&
       node.property.property.name === 'toPrimitive'
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

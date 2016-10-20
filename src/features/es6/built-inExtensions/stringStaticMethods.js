@@ -13,6 +13,6 @@ exports.func = (node, parent) => {
       (node.property.name === 'raw' ||
       node.property.name === 'fromCodePoint')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

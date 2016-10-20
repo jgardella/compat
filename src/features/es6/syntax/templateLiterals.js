@@ -9,6 +9,6 @@ exports.type = TYPE
  */
 exports.func = (node, parent) => {
   if (node.type === 'TemplateLiteral') {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

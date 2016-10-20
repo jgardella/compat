@@ -11,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'CallExpression' &&
       node.callee.name === 'Symbol'
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

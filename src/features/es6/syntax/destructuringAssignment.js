@@ -11,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'AssignmentExpression' &&
       (node.left.type === 'ArrayPattern' || node.left.type === 'ObjectPattern')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

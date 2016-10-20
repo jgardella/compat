@@ -12,6 +12,6 @@ exports.func = (node, parent) => {
       node.key.type === 'Identifier' &&
       node.method &&
       node.kind === 'init') {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

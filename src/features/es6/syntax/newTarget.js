@@ -12,6 +12,6 @@ exports.func = (node, parent) => {
       node.meta.name === 'new' &&
       node.property.name === 'target'
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

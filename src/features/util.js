@@ -1,9 +1,13 @@
 /**
  * Creates a feature with the given location and type.
- * @param loc Object object describing location of feature
+ * @param node Object ESTree node for feature
  * @param type type of feature
  * @return Object created feature
  */
-exports.createFeature = (loc, type) => {
-  return Object.assign({}, loc, { type })
+exports.createFeature = (node, type) => {
+  return {
+    type: type,
+    loc: node.loc,
+    range: node.range
+  }
 }

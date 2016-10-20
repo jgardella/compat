@@ -10,6 +10,6 @@ exports.type = TYPE
 exports.func = (node, parent) => {
   if (node.type === 'ClassDeclaration' &&
      node.superClass.name === 'Set') {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

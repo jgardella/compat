@@ -13,6 +13,6 @@ exports.func = (node, parent) => {
       (node.property.name === 'from' ||
       node.property.name === 'of')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

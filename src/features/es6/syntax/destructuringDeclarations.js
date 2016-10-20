@@ -11,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'VariableDeclarator' &&
       (node.id.type === 'ArrayPattern' || node.id.type === 'ObjectPattern')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

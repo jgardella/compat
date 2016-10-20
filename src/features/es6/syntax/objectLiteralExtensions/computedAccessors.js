@@ -11,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'Property' &&
       node.computed &&
       (node.kind === 'get' || node.kind === 'set')) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

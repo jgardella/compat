@@ -13,6 +13,6 @@ exports.func = (node, parent) => {
         return param.type === 'ArrayPattern' || param.type === 'ObjectPattern'
       })
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

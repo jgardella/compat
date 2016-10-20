@@ -22,6 +22,6 @@ exports.func = (node, parent) => {
       node.property.name === 'values' ||
       node.property.name === 'entries')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

@@ -11,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'FunctionDeclaration' &&
       node.generator === true
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

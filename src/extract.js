@@ -4,6 +4,7 @@ let allFeatures = require('./features/all.js')
 
 const esprimaOptions = {
   loc: true,
+  range: true,
   tolerant: true
 }
 

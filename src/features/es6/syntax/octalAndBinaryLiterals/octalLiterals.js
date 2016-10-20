@@ -12,6 +12,6 @@ exports.func = (node, parent) => {
       typeof node.value === 'number' &&
       node.raw.toLowerCase().indexOf('o') > -1
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

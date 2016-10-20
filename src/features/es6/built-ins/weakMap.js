@@ -11,6 +11,6 @@ exports.func = (node, parent) => {
   if (node.type === 'NewExpression' &&
       node.callee.name === 'WeakMap'
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

@@ -15,6 +15,6 @@ exports.func = (node, parent) => {
       node.property.name === 'getOwnPropertySymbols' ||
       node.property.name === 'setPrototypeOf')
   ) {
-    return util.createFeature(node.loc, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }
