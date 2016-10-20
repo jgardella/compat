@@ -95,6 +95,12 @@ module.exports.outputUndefinedEnvs = (undefinedEnvs) => {
   })
 }
 
+module.exports.outputNonExistentTargets = (nonExistentTargets) => {
+  nonExistentTargets.forEach((targetPath) => {
+    console.log(colors.red('Target "' + targetPath + '" does not exist. Ignoring.'))
+  })
+}
+
 function indentString (string, spaces) {
   return Array(spaces + 1).join(' ') + string.split('\n').join('\n' + Array(spaces + 1).join(' '))
 }

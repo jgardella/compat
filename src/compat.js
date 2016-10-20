@@ -38,7 +38,7 @@ const argv =
     })
     .config()
     .version()
-    .help()
+    .help(false)
     .argv
 
 if (argv.supportedFeatures) {
@@ -64,11 +64,18 @@ const definedEnvs = argv.envs.filter((envId) => {
 
 output.outputUndefinedEnvs(undefinedEnvs)
 
+const nonExistentTargets = []
 const filesToCheck =
   [].concat.apply([],
-    argv.target.map((fileName) => {
-      const isDir = fs.lstatSync(fileName).isDirectory()
-      if (isDir) {
+    argv.target.filter((fileName) => {
+      if (fs.existsSync(fileName)) {
+        return true
+      }
+      nonExistentTargets.push(fileName)
+      return false
+    }).map((fileName) => {
+      const fileStat = fs.lstatSync(fileName)
+      if (fileStat.isDirectory()) {
         return getFilesInDirectory(fileName, argv.recursive)
           .filter((fileName) => { return fileName.endsWith('.js') })
       } else {
@@ -76,6 +83,8 @@ const filesToCheck =
       }
     })
   )
+
+output.outputNonExistentTargets(nonExistentTargets)
 
 const featuresToExtract = features.getFeatures(argv.features, argv.ignoreFeatures)
 
