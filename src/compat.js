@@ -24,6 +24,7 @@ const argv =
       'features': 'feature(s) and/or feature group(s) to check for',
       'ignoreFeatures': 'feature(s) and/or feature group(s) to ignore',
       'recursive': 'enters directories specified in target recursively',
+      'supportedEnvs': 'prints out all supported environments',
       'supportedFeatures': 'prints out tree of supported features',
       'supportedFeatureGroups': 'prints out supported feature groups and their features',
       'enabledFeatures': 'prints out the features that will be enabled for detection with the provided flags',
