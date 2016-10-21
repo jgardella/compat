@@ -106,18 +106,18 @@ function getFilesInDirectory (path, recursive) {
   }
   let filesInDir = fs.readdirSync(path)
 
-  if (recursive) {
-    return [].concat.apply([],
-      filesInDir.map((file) => {
-        const isDir = fs.lstatSync(path + '/' + file).isDirectory()
-        if (isDir) {
+  return [].concat.apply([],
+    filesInDir.map((file) => {
+      const isDir = fs.lstatSync(path + '/' + file).isDirectory()
+      if (isDir) {
+        if (recursive) {
           return getFilesInDirectory(path + file + '/', recursive)
         } else {
-          return [path + file]
+          return []
         }
-      })
-    )
-  } else {
-    return filesInDir
-  }
+      } else {
+        return [path + file]
+      }
+    })
+  )
 }
