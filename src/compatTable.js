@@ -58,9 +58,7 @@ exports.getVersion = () => {
 }
 
 function writeTable (tableString) {
-  console.log('writing table')
   fs.writeFileSync(path.join(__dirname, '/../data/compatTable.json'), tableString)
-  console.log('requiring table')
   compatTable = require('../data/compatTable.json')
 }
 

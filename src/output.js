@@ -109,18 +109,22 @@ function indentString (string, spaces) {
 module.exports.outputTableStatus = (tableStatus) => {
   switch (tableStatus) {
     case compatTable.LOAD_TABLE_RESULT.SUCCESS:
-      console.log(colors.blue(
+      console.log(colors.green(
         'Succesfully updated compatibility table to v' + compatTable.getVersion()
       ))
       break
     case compatTable.LOAD_TABLE_RESULT.UP_TO_DATE:
-      console.log(colors.blue(
+      console.log(colors.green(
         'Compatibility table already up to date (v' + compatTable.getVersion() + ')'
       ))
       break
     case compatTable.LOAD_TABLE_RESULT.FAILED_OLD_TABLE:
-      console.log(colors.blue(
+      console.log(colors.red(
         'Failed to update compatibility table, using old version (v' + compatTable.getVersion() + ')'
       ))
   }
+}
+
+module.exports.outputTableLoadError = (err) => {
+  console.error(colors.red('Failed to load initial compatibility table: ' + err))
 }

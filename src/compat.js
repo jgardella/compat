@@ -64,18 +64,18 @@ function getFilesInDirectory (path, recursive) {
   )
 }
 
+if (argv.supportedFeatures) {
+  output.outputSupportedFeatures()
+}
+
+if (argv.supportedFeatureGroups) {
+  output.outputSupportedFeatureGroups()
+}
+
 const loadedNewTable = compatTable.loadUpdatedTable()
 
 loadedNewTable.then((value) => {
   output.outputTableStatus(value)
-
-  if (argv.supportedFeatures) {
-    output.outputSupportedFeatures()
-  }
-
-  if (argv.supportedFeatureGroups) {
-    output.outputSupportedFeatureGroups()
-  }
 
   if (argv.supportedEnvs) {
     output.outputSupportedEnvs()
@@ -127,5 +127,5 @@ loadedNewTable.then((value) => {
     output.outputErrors(errors, fileName)
   })
 }).catch((err) => {
-  console.error('Failed to load updated compatibility table: ' + err)
+  output.outputTableLoadError(err)
 })
