@@ -11,7 +11,7 @@ try {
   }
 }
 
-const API_URL = 'http://localhost:3000'
+const API_URL = 'https://compat-table-server.herokuapp.com'
 
 /**
  * Checks whether the provided feature is supported by the provided environment.
