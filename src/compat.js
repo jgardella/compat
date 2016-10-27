@@ -4,7 +4,6 @@ let extract = require('./extract.js')
 let check = require('./check.js')
 let output = require('./output.js')
 let features = require('./features.js')
-let envs = require('./envs.js')
 let compatTable = require('./compatTable.js')
 
 const argv =
@@ -84,7 +83,7 @@ loadedNewTable.then((value) => {
 
   const undefinedEnvs = []
   const definedEnvs = argv.envs.filter((envId) => {
-    if (envs.isEnvDefined(envId)) {
+    if (compatTable.isEnvDefined(envId)) {
       return true
     }
     undefinedEnvs.push(envId)

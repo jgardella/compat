@@ -1,17 +1,17 @@
 let fs = require('fs')
+let path = require('path')
 let request = require('request-promise-native')
 let compatTable
 
 try {
   compatTable = require('../data/compatTable.json')
 } catch (e) {
-  console.log(e)
   if (e.code === 'MODULE_NOT_FOUND') {
     compatTable = undefined
   }
 }
 
-const API_URL = 'http://localhost:8080'
+const API_URL = 'http://localhost:3000'
 
 /**
  * Checks whether the provided feature is supported by the provided environment.
@@ -20,10 +20,10 @@ const API_URL = 'http://localhost:8080'
  * @return support value for the feature
  */
 exports.featureSupportedByEnv = (feature, env) => {
-  if (compatTable[feature][env] === undefined) {
+  if (compatTable.compat[feature][env] === undefined) {
     return false
   }
-  return compatTable[feature][env]
+  return compatTable.compat[feature][env]
 }
 
 /**
@@ -32,11 +32,22 @@ exports.featureSupportedByEnv = (feature, env) => {
  * @return boolean true if feature is defined in table, false otherwise
  */
 exports.featureDefined = (feature) => {
-  return compatTable[feature] !== undefined
+  return compatTable.compat[feature] !== undefined
 }
 
 exports.tableLoaded = () => {
   return compatTable !== undefined
+}
+
+exports.isEnvDefined = (envId) => {
+  const envs = compatTable.envs
+  return Object.keys(envs).some((envGroupId) => {
+    return Object.keys(envs[envGroupId]).some((definedEnvId) => envId === definedEnvId)
+  })
+}
+
+exports.getEnvTable = () => {
+  return compatTable.envs
 }
 
 exports.getVersion = () => {
@@ -47,7 +58,9 @@ exports.getVersion = () => {
 }
 
 function writeTable (tableString) {
-  fs.writeFileSync('../data/compatTable.json', tableString)
+  console.log('writing table')
+  fs.writeFileSync(path.join(__dirname, '/../data/compatTable.json'), tableString)
+  console.log('requiring table')
   compatTable = require('../data/compatTable.json')
 }
 
@@ -66,19 +79,20 @@ exports.LOAD_TABLE_RESULT = LOAD_TABLE_RESULT
 exports.loadUpdatedTable = () => {
   return new Promise((resolve, reject) => {
     if (compatTable === undefined) {
-      const newTable = request.get(API_URL + '/loadTable')
+      const newTable = request.get(API_URL + '/loadLatestTable')
+
       newTable.then((tableValue) => {
         writeTable(tableValue)
         resolve(LOAD_TABLE_RESULT.SUCCESS)
       }).catch((err) => {
-        /* loading new table, table is still undefined */
-        reject(LOAD_TABLE_RESULT.FAILED_NO_TABLE)
+        /* failed loading new table, table is still undefined */
+        reject(err)
       })
     } else {
       const currentVersion = request.get(API_URL + '/currentVersion')
       currentVersion.then((versionValue) => {
         if (versionValue > compatTable.meta.version) {
-          const newTable = request.get(API_URL + '/loadTable')
+          const newTable = request.get(API_URL + '/loadLatestTable')
           newTable.then((tableValue) => {
             writeTable(tableValue)
             /* succesfully loaded new version of table */

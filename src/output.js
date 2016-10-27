@@ -2,7 +2,6 @@ let fs = require('fs')
 let colors = require('colors')
 let all = require('./features/all.js')
 let features = require('./features.js')
-let envs = require('./envs.js')
 let compatTable = require('./compatTable.js')
 
 module.exports.outputErrors = (errors, fileName) => {
@@ -80,8 +79,9 @@ module.exports.outputEnabledFeatures = (enabledFeatures) => {
 }
 
 module.exports.outputSupportedEnvs = () => {
+  const envs = compatTable.getEnvTable()
   console.log(colors.bold('Supported Envs: '))
-  Object.keys(envs.envs).forEach((envGroupId) => {
+  Object.keys(envs).forEach((envGroupId) => {
     const envGroup = envs[envGroupId]
     console.log('  ' + colors.bold(envGroupId))
     Object.keys(envGroup).forEach((envId) => {
