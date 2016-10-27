@@ -3,6 +3,7 @@ let colors = require('colors')
 let all = require('./features/all.js')
 let features = require('./features.js')
 let envs = require('./envs.js')
+let compatTable = require('./compatTable.js')
 
 module.exports.outputErrors = (errors, fileName) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
@@ -103,4 +104,23 @@ module.exports.outputNonExistentTargets = (nonExistentTargets) => {
 
 function indentString (string, spaces) {
   return Array(spaces + 1).join(' ') + string.split('\n').join('\n' + Array(spaces + 1).join(' '))
+}
+
+module.exports.outputTableStatus = (tableStatus) => {
+  switch (tableStatus) {
+    case compatTable.LOAD_TABLE_RESULT.SUCCESS:
+      console.log(colors.blue(
+        'Succesfully updated compatibility table to v' + compatTable.getVersion()
+      ))
+      break
+    case compatTable.LOAD_TABLE_RESULT.UP_TO_DATE:
+      console.log(colors.blue(
+        'Compatibility table already up to date (v' + compatTable.getVersion() + ')'
+      ))
+      break
+    case compatTable.LOAD_TABLE_RESULT.FAILED_OLD_TABLE:
+      console.log(colors.blue(
+        'Failed to update compatibility table, using old version (v' + compatTable.getVersion() + ')'
+      ))
+  }
 }
