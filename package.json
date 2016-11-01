@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.1.2",
-    "esprima": "^3.1.0",
+    "esprima": "^3.1.1",
     "estraverse": "^4.2.0",
     "yargs": "^6.2.0"
   },
