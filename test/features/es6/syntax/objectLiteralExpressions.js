@@ -8,7 +8,6 @@ let stringKeyedShorthandMethods = require(featuresPath + 'stringKeyedShorthandMe
 let computedShorthandMethods = require(featuresPath + 'computedShorthandMethods.js')
 let computedAccessors = require(featuresPath + 'computedAccessors.js')
 
-
 describe('Object Literal Extensions', function () {
   it('should extract computed properties', function () {
     let program = `var x = 'y'; ({ [x]: 1 });`

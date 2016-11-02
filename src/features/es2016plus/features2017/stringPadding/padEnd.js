@@ -1,6 +1,6 @@
 let util = require('../../../util.js')
 
-const TYPE = 'String.prototype.padEnd'
+const TYPE = 'String padding_String.prototype.padEnd'
 
 exports.type = TYPE
 

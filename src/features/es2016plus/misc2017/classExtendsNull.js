@@ -9,6 +9,7 @@ exports.type = TYPE
  */
 exports.func = (node, parent) => {
   if (node.type === 'ClassDeclaration' &&
+      node.superClass !== null &&
       node.superClass.type === 'Literal' &&
       node.superClass.value === null
   ) {

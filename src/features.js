@@ -9,7 +9,12 @@ const featureGroupMap = {
   'es6-builtIns': './features/es6/built-ins/all.js',
   'es6-builtInExtensions': './features/es6/built-inExtensions/all.js',
   'es6-subclassing': './features/es6/subclassing/all.js',
-  'es6-subclassing-miscSubclassables': './features/es6/subclassing/miscSubclassables/all.js'
+  'es6-subclassing-miscSubclassables': './features/es6/subclassing/miscSubclassables/all.js',
+  'es2016+': './features/es2016plus/all.js',
+  'es2016': './features/es2016plus/features2016/all.js',
+  'es2017': './features/es2016plus/features2017/all.js',
+  'es2016-stringPadding': './features/es2016plus/features2017/stringPadding/all.js',
+  'es2017-misc': './features/es2016plus/misc2017/all.js'
 }
 
 const featureMap = createFeatureMap()
