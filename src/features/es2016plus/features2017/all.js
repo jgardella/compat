@@ -6,9 +6,9 @@ let stringPadding = require('./stringPadding/all.js')
 module.exports.groupName = '2017 features'
 
 let features = {}
-features[objectValues.type] = objectValues.feature
-features[objectEntries.type] = objectEntries.feature
-features[objectGetOwnPropertyDescriptors.type] = objectGetOwnPropertyDescriptors.feature
-features[stringPadding.type] = stringPadding.feature
+features[objectValues.type] = objectValues
+features[objectEntries.type] = objectEntries
+features[objectGetOwnPropertyDescriptors.type] = objectGetOwnPropertyDescriptors
+features[stringPadding.groupName] = stringPadding.features
 
 module.exports.features = features
