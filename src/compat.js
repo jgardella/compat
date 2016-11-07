@@ -1,17 +1,7 @@
 let fs = require('fs')
-let detectJS = require('./js/detect.js')
 let check = require('./check.js')
-let featuresJS = require('./js/features.js')
-let allJS = require('./js/features/all.js')
 let envMap = require('./envs.js')
-
-exports.getSupportedFeatures = () => {
-  return allJS.features
-}
-
-exports.getSupportedFeatureGroups = () => {
-  return featuresJS.getFlattenedFeatureGroupMap()
-}
+let js = require('./js/check.js')
 
 exports.getSupportedEnvs = () => {
   return envMap.envs
@@ -23,24 +13,46 @@ exports.getUndefinedEnvs = (envs) => {
   })
 }
 
+exports.getSupportedFeatures = () => {
+  let obj = {}
+
+  obj[js.name] = js.getSupportedFeatures()
+
+  return obj
+}
+
+exports.getSupportedFeatureGroups = () => {
+  let obj = {}
+
+  obj[js.name] = js.getSupportedFeatureGroups()
+
+  return obj
+}
+
 exports.getEnabledFeatures = (features, ignoreFeatures) => {
-  return featuresJS.getFeatures(features, ignoreFeatures)
+  let obj = {}
+
+  obj[js.name] = js.getEnabledFeatures(features, ignoreFeatures)
+
+  return obj
 }
 
 exports.check = (targets, envs, features, ignoreFeatures) => {
   const definedEnvs = envs.filter((envId) => {
-    if (envMap.isEnvDefined(envId)) {
-      return true
-    }
-    return false
+    return envMap.isEnvDefined(envId)
   })
 
-  const featuresToExtract = featuresJS.getFeatures(features, ignoreFeatures)
+  const jsFeaturesToExtract = js.getEnabledFeatures(features, ignoreFeatures)
 
   let obj = {}
   targets.forEach((fileName) => {
     let fileContents = fs.readFileSync(fileName, 'utf8')
-    let usedFeatures = detectJS.withFeatures(fileContents, featuresToExtract)
+    let usedFeatures = {}
+    if (fileName.match(js.fileRegex)) {
+      let jsFeatures = js.check(fileContents, jsFeaturesToExtract)
+      Object.assign(usedFeatures, jsFeatures)
+    }
+
     const errors = check.checkFeatureCompatibility(usedFeatures, definedEnvs)
     if (Object.keys(errors).length > 0) {
       obj[fileName] = errors

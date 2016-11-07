@@ -34,7 +34,6 @@ module.exports.getFlattenedFeatureGroupMap = () => {
   let flattenedMap = {}
 
   Object.keys(featureGroupMap).forEach((key) => {
-    console.log(key)
     flattenedMap[key] = flattenGroupToFeatures(require(featureGroupMap[key]).features)
   })
 

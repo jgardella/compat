@@ -56,24 +56,28 @@ function outputSupportedFeaturesTree (node, level) {
 
 module.exports.outputSupportedFeatureGroups = (featureGroupMap) => {
   console.log(colors.bold('Supported Feature Groups: '))
-  Object.keys(featureGroupMap).forEach((featureGroupName) => {
-    const featureGroup = featureGroupMap[featureGroupName]
-    console.log('  ' + featureGroupName)
-    featureGroup.forEach((feature) => {
-      console.log('    ' + feature.type)
+  Object.keys(featureGroupMap).forEach((featureGroupType) => {
+    const featureGroupTypeObj = featureGroupMap[featureGroupType]
+    console.log(colors.bold('  ' + featureGroupType))
+    Object.keys(featureGroupTypeObj).forEach((featureGroupName) => {
+      const featureGroup = featureGroupTypeObj[featureGroupName]
+      console.log('    ' + featureGroupName)
+      featureGroup.forEach((feature) => {
+        console.log('      ' + feature.type)
+      })
     })
   })
 }
 
 module.exports.outputEnabledFeatures = (enabledFeatures) => {
-  if (enabledFeatures.length > 0) {
-    console.log(colors.bold('Enabled Features: '))
-    enabledFeatures.forEach((feature) => {
-      console.log('  ' + feature.type)
+  console.log(colors.bold('Enabled Features: '))
+  Object.keys(enabledFeatures).forEach((featureType) => {
+    console.log(colors.bold('  ' + featureType))
+    const features = enabledFeatures[featureType]
+    features.forEach((feature) => {
+      console.log('    ' + feature.type)
     })
-  } else {
-    console.log(colors.bold('Enabled Features: ') + 'none')
-  }
+  })
 }
 
 module.exports.outputSupportedEnvs = (supportedEnvs) => {
