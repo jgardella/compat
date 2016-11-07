@@ -1,44 +1,44 @@
 let fs = require('fs')
 let colors = require('colors')
-let all = require('./features/all.js')
-let features = require('./features.js')
-let envs = require('./envs.js')
 
-module.exports.outputErrors = (errors, fileName) => {
+module.exports.outputErrors = (errors) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
   if (numErrors > 0) {
-    const fileContents = fs.readFileSync(fileName, 'utf8')
-    console.log(colors.bold(colors.underline(fileName) + '": ') + colors.red(numErrors + ' errors'))
-    Object.keys(errors).forEach((errorKey) => {
-      const error = errors[errorKey]
-      if (error.error === 'featureUndefined') {
-        console.log(colors.blue('undefined feature: ' + errorKey))
-      } else if (error.error === 'incompatibility') {
-        const incompatEnvString = error.incompatEnvs.join(', ')
-        const partialEnvString = error.partialEnvs.join(', ')
+    Object.keys(errors).forEach((fileName) => {
+      const fileErrors = errors[fileName]
+      const fileContents = fs.readFileSync(fileName, 'utf8')
+      console.log(colors.bold(colors.underline(fileName) + '": ') + colors.red(numErrors + ' errors'))
+      Object.keys(fileErrors).forEach((fileErrorKey) => {
+        const error = fileErrors[fileErrorKey]
+        if (error.error === 'featureUndefined') {
+          console.log(colors.blue('undefined feature: ' + fileErrorKey))
+        } else if (error.error === 'incompatibility') {
+          const incompatEnvString = error.incompatEnvs.join(', ')
+          const partialEnvString = error.partialEnvs.join(', ')
 
-        if (incompatEnvString.length > 0 || partialEnvString.length > 0) {
-          console.log(colors.bold('  feature: ') + errorKey)
-          if (incompatEnvString.length > 0) {
-            console.log(colors.red(colors.bold('    incompatible: ') + incompatEnvString))
-          }
-          if (partialEnvString.length > 0) {
-            console.log(colors.yellow(colors.bold('    partial:      ') + partialEnvString))
-          }
+          if (incompatEnvString.length > 0 || partialEnvString.length > 0) {
+            console.log(colors.bold('  feature: ') + fileErrorKey)
+            if (incompatEnvString.length > 0) {
+              console.log(colors.red(colors.bold('    incompatible: ') + incompatEnvString))
+            }
+            if (partialEnvString.length > 0) {
+              console.log(colors.yellow(colors.bold('    partial:      ') + partialEnvString))
+            }
 
-          error.features.forEach((feature) => {
-            console.log(colors.bold('    ' + 'on line ' + colors.underline(feature.loc.start.line) + ':'))
-            console.log(indentString(fileContents.slice(feature.range[0], feature.range[1]), 6))
-          })
+            error.features.forEach((feature) => {
+              console.log(colors.bold('    ' + 'on line ' + colors.underline(feature.loc.start.line) + ':'))
+              console.log(indentString(fileContents.slice(feature.range[0], feature.range[1]), 6))
+            })
+          }
         }
-      }
+      })
     })
   }
 }
 
-module.exports.outputSupportedFeatures = () => {
+module.exports.outputSupportedFeatures = (allFeatures) => {
   console.log(colors.bold('Supported Features: '))
-  outputSupportedFeaturesTree(all.features, 1)
+  outputSupportedFeaturesTree(allFeatures, 1)
 }
 
 function outputSupportedFeaturesTree (node, level) {
@@ -54,9 +54,7 @@ function outputSupportedFeaturesTree (node, level) {
   })
 }
 
-module.exports.outputSupportedFeatureGroups = () => {
-  const featureGroupMap = features.getFlattenedFeatureGroupMap()
-
+module.exports.outputSupportedFeatureGroups = (featureGroupMap) => {
   console.log(colors.bold('Supported Feature Groups: '))
   Object.keys(featureGroupMap).forEach((featureGroupName) => {
     const featureGroup = featureGroupMap[featureGroupName]
@@ -78,10 +76,10 @@ module.exports.outputEnabledFeatures = (enabledFeatures) => {
   }
 }
 
-module.exports.outputSupportedEnvs = () => {
+module.exports.outputSupportedEnvs = (supportedEnvs) => {
   console.log(colors.bold('Supported Envs: '))
-  Object.keys(envs.envs).forEach((envGroupId) => {
-    const envGroup = envs[envGroupId]
+  Object.keys(supportedEnvs).forEach((envGroupId) => {
+    const envGroup = supportedEnvs[envGroupId]
     console.log('  ' + colors.bold(envGroupId))
     Object.keys(envGroup).forEach((envId) => {
       console.log('    ' + envId)
