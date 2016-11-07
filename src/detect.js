@@ -9,7 +9,7 @@ const esprimaOptions = {
 }
 
 /**
- * Extracts features from the provided program text,
+ * Detects features in the provided program text,
  * only scanning for the provided list of features.
  * @param program {string} program text
  * @param features array of features to look for
@@ -20,7 +20,7 @@ function withFeatures (program, features) {
 }
 
 /**
- * Extracts features from the provided program text,
+ * Detects features in the provided program text,
  * scanning for all defined features.
  * @param program {string} program text
  */

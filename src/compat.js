@@ -1,6 +1,6 @@
 let yargs = require('yargs')
 let fs = require('fs')
-let extract = require('./extract.js')
+let detect = require('./detect.js')
 let check = require('./check.js')
 let output = require('./output.js')
 let features = require('./features.js')
@@ -95,7 +95,7 @@ if (argv.enabledFeatures) {
 
 filesToCheck.forEach((fileName) => {
   let fileContents = fs.readFileSync(fileName, 'utf8')
-  let usedFeatures = extract.withFeatures(fileContents, featuresToExtract)
+  let usedFeatures = detect.withFeatures(fileContents, featuresToExtract)
   let errors = check.checkFeatureCompatibility(usedFeatures, definedEnvs)
   output.outputErrors(errors, fileName)
 })
