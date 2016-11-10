@@ -6,22 +6,22 @@ let featureTest = require('../featureTest.js')
 
 describe('Form Validation', function () {
   it('should find input pattern attribute', function () {
-    let program = `<input pattern='blah'></input>`
-    featureTest(program, patternAttributeFeature)
+    let html = `<input pattern='blah'>`
+    featureTest(html, patternAttributeFeature)
   })
 
   it('should find input minlength attribute', function () {
-    let program = `<input minlength=24></input>`
-    featureTest(program, minLengthAttributeFeature)
+    let html = `<input minlength=24>`
+    featureTest(html, minLengthAttributeFeature)
   })
 
   it('should find input maxlength attribute', function () {
-    let program = `<input maxlength=24></input>`
-    featureTest(program, maxLengthAttributeFeature)
+    let html = `<input maxlength=24>`
+    featureTest(html, maxLengthAttributeFeature)
   })
 
   it('should find textarea maxlength attribute', function () {
-    let program = `<textarea maxlength=24></input>`
-    featureTest(program, maxLengthAttributeFeature)
+    let html = `<textarea maxlength=24></textarea>`
+    featureTest(html, maxLengthAttributeFeature)
   })
 })
