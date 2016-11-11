@@ -70,6 +70,7 @@ module.exports.outputSupportedFeatureGroups = (featureGroupMap) => {
 }
 
 module.exports.outputEnabledFeatures = (enabledFeatures) => {
+  debugger
   console.log(colors.bold('Enabled Features: '))
   Object.keys(enabledFeatures).forEach((featureType) => {
     console.log(colors.bold('  ' + featureType))

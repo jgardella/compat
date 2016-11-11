@@ -3,7 +3,7 @@ let features = require('../features.js')
 let all = require('./features/all.js')
 
 const featureGroupMap = {
-  'all': './js/features/all.js',
+  'js': './js/features/all.js',
   'es6': './js/features/es6/all.js',
   'es6-syntax': './js/features/es6/syntax/all.js',
   'es6-syntax-objectLiteralExtensions': './js/features/es6/syntax/objectLiteralExtensions/all.js',
@@ -30,7 +30,7 @@ exports.getSupportedFeatureGroups = () => {
 }
 
 exports.getEnabledFeatures = (featureIds, ignoreFeatureIds) => {
-  return features.getFeatures(featureGroupMap, featureIds, ignoreFeatureIds)
+  return features.getFeatures(featureGroupMap, all.features, featureIds, ignoreFeatureIds)
 }
 
 exports.name = 'JavaScript'

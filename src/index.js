@@ -30,7 +30,7 @@ const argv =
     .default({
       'target': ['.'],
       'envs': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
-      'features': ['all'],
+      'features': ['js', 'html'],
       'ignoreFeatures': [],
       'config': './.compatrc.json'
     })

@@ -1,8 +1,8 @@
 let fs = require('fs')
 let check = require('./check.js')
 let envMap = require('./envs.js')
-let js = require('./js/check.js')
-let html = require('./html/check.js')
+let js = require('./js/index.js')
+let html = require('./html/index.js')
 
 exports.getSupportedEnvs = () => {
   return envMap.envs
@@ -46,15 +46,22 @@ exports.check = (targets, envs, features, ignoreFeatures) => {
     return envMap.isEnvDefined(envId)
   })
 
-  const jsFeaturesToExtract = js.getEnabledFeatures(features, ignoreFeatures)
+  const jsFeaturesToDetect = js.getEnabledFeatures(features, ignoreFeatures)
+  const htmlFeaturesToDetect = html.getEnabledFeatures(features, ignoreFeatures)
 
   let obj = {}
   targets.forEach((fileName) => {
     let fileContents = fs.readFileSync(fileName, 'utf8')
     let usedFeatures = {}
+
     if (fileName.match(js.fileRegex)) {
-      let jsFeatures = js.check(fileContents, jsFeaturesToExtract)
+      let jsFeatures = js.check(fileContents, jsFeaturesToDetect)
       Object.assign(usedFeatures, jsFeatures)
+    }
+
+    if (fileName.match(html.fileRegex)) {
+      let htmlFeatures = html.check(fileContents, htmlFeaturesToDetect)
+      Object.assign(usedFeatures, htmlFeatures)
     }
 
     const errors = check.checkFeatureCompatibility(usedFeatures, definedEnvs)

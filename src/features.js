@@ -1,13 +1,15 @@
-module.exports.getFeatures = (featureGroupMap, featureIds, ignoreFeatureIds) => {
-  let featureMap = createFeatureMap(featureGroupMap)
+module.exports.getFeatures = (featureGroupMap, allFeatures, featureIds, ignoreFeatureIds) => {
+  let featureMap = createFeatureMap(allFeatures)
   let features = featureIdsToFeatures(featureGroupMap, featureMap, featureIds)
   let featuresToIgnore = featureIdsToFeatures(featureGroupMap, featureMap, ignoreFeatureIds)
 
-  return features.filter((feature) => {
+  let result = features.filter((feature) => {
     return !featuresToIgnore.some((ignoreFeature) => {
       return feature.type === ignoreFeature.type
     })
   })
+
+  return result
 }
 
 module.exports.getFlattenedFeatureGroupMap = (featureGroupMap) => {
@@ -28,7 +30,9 @@ function featureIdsToFeatures (featureGroupMap, featureMap, featureIds) {
     if (featureGroupMap[featureId] !== undefined) {
       featureGroups.push(require(featureGroupMap[featureId]).features)
     } else {
-      features.push(featureMap[featureId])
+      if (featureMap[featureId] !== undefined) {
+        features.push(featureMap[featureId])
+      }
     }
   })
 
@@ -55,10 +59,10 @@ function flattenGroupToFeatures (group) {
   return features
 }
 
-function createFeatureMap (featureGroupMap) {
+function createFeatureMap (allFeatures) {
   let featureMap = {}
 
-  flattenGroupToFeatures(require(featureGroupMap['all']).features).forEach((feature) => {
+  flattenGroupToFeatures(allFeatures).forEach((feature) => {
     featureMap[feature.type] = feature
   })
 
