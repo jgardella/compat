@@ -2,6 +2,7 @@ let fs = require('fs')
 let check = require('./check.js')
 let envMap = require('./envs.js')
 let js = require('./js/check.js')
+let html = require('./html/check.js')
 
 exports.getSupportedEnvs = () => {
   return envMap.envs
@@ -17,6 +18,7 @@ exports.getSupportedFeatures = () => {
   let obj = {}
 
   obj[js.name] = js.getSupportedFeatures()
+  obj[html.name] = html.getSupportedFeatures()
 
   return obj
 }
@@ -25,6 +27,7 @@ exports.getSupportedFeatureGroups = () => {
   let obj = {}
 
   obj[js.name] = js.getSupportedFeatureGroups()
+  obj[html.name] = html.getSupportedFeatureGroups()
 
   return obj
 }
@@ -33,6 +36,7 @@ exports.getEnabledFeatures = (features, ignoreFeatures) => {
   let obj = {}
 
   obj[js.name] = js.getEnabledFeatures(features, ignoreFeatures)
+  obj[html.name] = html.getEnabledFeatures(features, ignoreFeatures)
 
   return obj
 }

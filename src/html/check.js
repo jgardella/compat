@@ -1,18 +1,24 @@
 let detect = require('./detect.js')
+let features = require('../features.js')
+let all = require('./features/all.js')
 
-/*
+const featureGroupMap = {
+  'all': './html/features/all.js',
+  'form': './html/features/form/all.js',
+  'form-validation': './html/features/form/validation/all.js'
+}
+
 exports.getSupportedFeatures = () => {
   return all.features
 }
 
 exports.getSupportedFeatureGroups = () => {
-  return features.getFlattenedFeatureGroupMap()
+  return features.getFlattenedFeatureGroupMap(featureGroupMap)
 }
 
 exports.getEnabledFeatures = (featureIds, ignoreFeatureIds) => {
-  return features.getFeatures(featureIds, ignoreFeatureIds)
+  return features.getFeatures(featureGroupMap, featureIds, ignoreFeatureIds)
 }
-*/
 
 exports.name = 'HTML'
 
