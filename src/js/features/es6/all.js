@@ -3,7 +3,7 @@ let bindings = require('./bindings/all.js')
 let functions = require('./functions/all.js')
 let builtIns = require('./built-ins/all.js')
 let builtInExtensions = require('./built-inExtensions/all.js')
-let subclassing = require('./built-inExtensions/all.js')
+let subclassing = require('./subclassing/all.js')
 
 module.exports.groupName = 'ES6'
 

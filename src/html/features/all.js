@@ -1,0 +1,57 @@
+let acceptAttributeForFileInput = require('./acceptAttributeForFileInput.js')
+let attributesForFormSubmission = require('./attributesForFormSubmission.js')
+let audioElement = require('./audioElement.js')
+let autofocusAttribute = require('./autofocusAttribute.js')
+let datasetAttributes = require('./datasetAttributes.js')
+let detailsAndSummaryElements = require('./detailsAndSummaryElements.js')
+let downloadAttribute = require('./downloadAttribute.js')
+let dragAndDrop = require('./dragAndDrop.js')
+let form = require('./form/all.js')
+let hiddenAttribute = require('./hiddenAttribute.js')
+let inlineSVG = require('./inlineSVG.js')
+let newSemanticElements = require('./newSemanticElements.js')
+let pingAttribute = require('./pingAttribute.js')
+let pngFavicons = require('./pngFavicons.js')
+let reversedAttribute = require('./reversedAttribute.js')
+let rubyAnnotation = require('./rubyAnnotation.js')
+let sandboxAttributeForIframes = require('./sandboxAttributeForIframes.js')
+let spellcheckAttribute = require('./spellcheckAttribute.js')
+let srcdocAttributeForIframes = require('./srcdocAttributeForIframes.js')
+let srcsetAttribute = require('./srcsetAttribute.js')
+let svgFavicons = require('./svgFavicons.js')
+let tabindexGlobalAttribute = require('./tabindexGlobalAttribute.js')
+let toolbarContextMenu = require('./toolbarContextMenu.js')
+let videoElement = require('./videoElement.js')
+let wbrElement = require('./wbrElement.js')
+
+module.exports.groupName = 'html'
+
+let features = {}
+
+features[acceptAttributeForFileInput.type] = acceptAttributeForFileInput
+features[attributesForFormSubmission.type] = attributesForFormSubmission
+features[audioElement.type] = audioElement
+features[autofocusAttribute.type] = autofocusAttribute
+features[datasetAttributes.type] = datasetAttributes
+features[detailsAndSummaryElements.type] = detailsAndSummaryElements
+features[downloadAttribute.type] = downloadAttribute
+features[dragAndDrop.type] = dragAndDrop
+features[form.groupName] = form.features
+features[hiddenAttribute.type] = hiddenAttribute
+features[inlineSVG.type] = inlineSVG
+features[newSemanticElements.type] = newSemanticElements
+features[pingAttribute.type] = pingAttribute
+features[pngFavicons.type] = pngFavicons
+features[reversedAttribute.type] = reversedAttribute
+features[rubyAnnotation.type] = rubyAnnotation
+features[sandboxAttributeForIframes.type] = sandboxAttributeForIframes
+features[spellcheckAttribute.type] = spellcheckAttribute
+features[srcdocAttributeForIframes.type] = srcdocAttributeForIframes
+features[srcsetAttribute.type] = srcsetAttribute
+features[svgFavicons.type] = svgFavicons
+features[tabindexGlobalAttribute.type] = tabindexGlobalAttribute
+features[toolbarContextMenu.type] = toolbarContextMenu
+features[videoElement.type] = videoElement
+features[wbrElement.type] = wbrElement
+
+module.exports.features = features
