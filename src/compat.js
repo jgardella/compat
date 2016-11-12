@@ -41,7 +41,7 @@ exports.getEnabledFeatures = (features, ignoreFeatures) => {
   return obj
 }
 
-exports.check = (targets, envs, features, ignoreFeatures) => {
+exports.check = (targets, envs, features, ignoreFeatures, compatTableLocation) => {
   const definedEnvs = envs.filter((envId) => {
     return envMap.isEnvDefined(envId)
   })
@@ -64,7 +64,7 @@ exports.check = (targets, envs, features, ignoreFeatures) => {
       Object.assign(usedFeatures, htmlFeatures)
     }
 
-    const errors = check.checkFeatureCompatibility(usedFeatures, definedEnvs)
+    const errors = check.checkFeatureCompatibility(usedFeatures, definedEnvs, compatTableLocation)
     if (Object.keys(errors).length > 0) {
       obj[fileName] = errors
     }

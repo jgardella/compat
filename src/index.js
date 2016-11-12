@@ -1,7 +1,9 @@
 let yargs = require('yargs')
 let fs = require('fs')
+let path = require('path')
 let compat = require('./compat.js')
 let output = require('./output.js')
+let createTable = require('./tableUpdater/createTable.js')
 
 const argv =
   yargs
@@ -39,10 +41,13 @@ const argv =
     .help(false)
     .argv
 
+const compatTableLocation = path.join(__dirname, '../data/compatTable.json')
+
 if (argv.supportedFeatures ||
     argv.supportedFeatureGroups ||
     argv.supportedEnvs
 ) {
+  console.log('blah')
   if (argv.supportedFeatures) {
     const supportedFeatures = compat.getSupportedFeatures()
     output.outputSupportedFeatures(supportedFeatures)
@@ -58,6 +63,16 @@ if (argv.supportedFeatures ||
     output.outputSupportedEnvs(supportedEnvs)
   }
 } else {
+  createTable.createTable(compatTableLocation)
+    .then(() => {
+      runCompat(compatTableLocation)
+    })
+    .catch((err) => {
+      console.log('Error loading new compat table: ' + err)
+    })
+}
+
+function runCompat (compatTableLocation) {
   const nonExistentTargets = []
   const filesToCheck =
     [].concat.apply([],
@@ -90,7 +105,7 @@ if (argv.supportedFeatures ||
     output.outputEnabledFeatures(enabledFeatures)
   }
 
-  const errors = compat.check(filesToCheck, argv.envs, argv.features, argv.ignoreFeatures)
+  const errors = compat.check(filesToCheck, argv.envs, argv.features, argv.ignoreFeatures, compatTableLocation)
   output.outputErrors(errors)
 }
 
