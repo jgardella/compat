@@ -129,7 +129,8 @@ module.exports.createTable = (compatTableLocation) => {
       .then((htmlTable) => {
         createJSTable().then((jsTable) => {
           let fullTable = {
-            envs: htmlTable.envs.concat(jsTable.envs).filter((v, i, a) => a.indexOf(v) === i),
+            htmlEnvs: htmlTable.envs,
+            jsEnvs: jsTable.envs,
             compat: Object.assign({}, htmlTable.compat, jsTable.compat)
           }
 

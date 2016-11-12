@@ -3,22 +3,31 @@ let check = require('./check.js')
 let js = require('./js/index.js')
 let html = require('./html/index.js')
 
-function isEnvDefined (envTable, env) {
-  return Object.keys(envTable).some((envGroupId) => {
-    return Object.keys(envTable[envGroupId]).some((definedEnvId) => env === definedEnvId)
-  })
+function isEnvDefined (allEnvs, env) {
+  return allEnvs.some((envId) => { return env === envId })
 }
 
 exports.getSupportedEnvs = (compatTableLocation) => {
-  return require(compatTableLocation).envs
+  const compatTable = require(compatTableLocation)
+
+  return {
+    htmlEnvs: compatTable.htmlEnvs,
+    jsEnvs: compatTable.jsEnvs
+  }
 }
 
-exports.getUndefinedEnvs = (compatTableLocation, envs) => {
-  const envTable = require(compatTableLocation).envs
+exports.getUndefinedEnvs = (compatTableLocation, jsEnvs, htmlEnvs) => {
+  const compatTable = require(compatTableLocation)
 
-  return envs.filter((envId) => {
-    return !isEnvDefined(envTable, envId)
+  let undefinedJSEnvs = jsEnvs.filter((envId) => {
+    return !isEnvDefined(compatTable.jsEnvs, envId)
   })
+
+  let undefinedHTMLEnvs = htmlEnvs.filter((envId) => {
+    return !isEnvDefined(compatTable.htmlEnvs, envId)
+  })
+
+  return undefinedJSEnvs.concat(undefinedHTMLEnvs)
 }
 
 exports.getSupportedFeatures = () => {
@@ -48,11 +57,15 @@ exports.getEnabledFeatures = (features, ignoreFeatures) => {
   return obj
 }
 
-exports.check = (targets, envs, features, ignoreFeatures, compatTableLocation) => {
-  const envTable = require(compatTableLocation).envs
+exports.check = (targets, jsEnvs, htmlEnvs, features, ignoreFeatures, compatTableLocation) => {
+  const compatTable = require(compatTableLocation)
 
-  const definedEnvs = envs.filter((envId) => {
-    return isEnvDefined(envTable, envId)
+  const definedJSEnvs = jsEnvs.filter((envId) => {
+    return isEnvDefined(compatTable.jsEnvs, envId)
+  })
+
+  const definedHTMLEnvs = htmlEnvs.filter((envId) => {
+    return isEnvDefined(compatTable.htmlEnvs, envId)
   })
 
   const jsFeaturesToDetect = js.getEnabledFeatures(features, ignoreFeatures)
@@ -61,21 +74,24 @@ exports.check = (targets, envs, features, ignoreFeatures, compatTableLocation) =
   let obj = {}
   targets.forEach((fileName) => {
     let fileContents = fs.readFileSync(fileName, 'utf8')
-    let usedFeatures = {}
+    let jsFeatures = {}
+    let htmlFeatures = {}
 
     if (fileName.match(js.fileRegex)) {
-      let jsFeatures = js.check(fileContents, jsFeaturesToDetect)
-      Object.assign(usedFeatures, jsFeatures)
+      let newFeatures = js.check(fileContents, jsFeaturesToDetect)
+      Object.assign(jsFeatures, newFeatures)
     }
 
     if (fileName.match(html.fileRegex)) {
-      let htmlFeatures = html.check(fileContents, htmlFeaturesToDetect)
-      Object.assign(usedFeatures, htmlFeatures)
+      let newFeatures = html.check(fileContents, htmlFeaturesToDetect)
+      Object.assign(htmlFeatures, newFeatures)
     }
 
-    const errors = check.checkFeatureCompatibility(usedFeatures, definedEnvs, compatTableLocation)
-    if (Object.keys(errors).length > 0) {
-      obj[fileName] = errors
+    const jsErrors = check.checkFeatureCompatibility(jsFeatures, definedJSEnvs, compatTableLocation)
+    const htmlErrors = check.checkFeatureCompatibility(htmlFeatures, definedHTMLEnvs, compatTableLocation)
+    const allErrors = Object.assign({}, jsErrors, htmlErrors)
+    if (Object.keys(allErrors).length > 0) {
+      obj[fileName] = allErrors
     }
   })
 

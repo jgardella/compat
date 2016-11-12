@@ -84,8 +84,15 @@ module.exports.outputEnabledFeatures = (enabledFeatures) => {
 
 module.exports.outputSupportedEnvs = (supportedEnvs) => {
   console.log(colors.bold('Supported Envs: '))
-  supportedEnvs.forEach((envId) => {
-    console.log('  ' + envId)
+
+  console.log(colors.bold('  JS: '))
+  supportedEnvs.jsEnvs.forEach((envId) => {
+    console.log('    ' + envId)
+  })
+
+  console.log(colors.bold('  HTML: '))
+  supportedEnvs.htmlEnvs.forEach((envId) => {
+    console.log('    ' + envId)
   })
 }
 

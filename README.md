@@ -16,7 +16,7 @@ To manually specify target files/directories, use the `--target` (`-t`) flag.
 compat --target fileOne.js fileTwo.js directory
 ```
 
-By default, compat will not recursively traverse directories to find all `.js` files.
+By default, compat will not recursively traverse directories to find all `.js` or `.html` files.
 Enable this functionality with the `--recursive` (`-r`) flag.
 
 ```
@@ -53,11 +53,13 @@ By default, compat will check for compatibility issues with the following enviro
 - Safari 9 & 10
 - Firefox 49
 
-Use the `--envs` (`-e`) flag to specify which environments to check for issues. Use the
-`---supportedEnvs` flag to show available environments.
+Use the `--jsEnvs` (`-j`) and `--htmlEnvs` (`-h`) flags to specify which environments
+to check for issues. Use the `---supportedEnvs` flag to show available environments. There
+are separate flags for JS and HTML environments because they use different sources for their
+compatibility info.
 
 ```
-compat --envs ie11 chrome54
+compat --jsEnvs ie11 chrome54 --htmlEnvs ie11
 ```
 
 All of the above flags can be specified in a config file. By default, compat will try to read

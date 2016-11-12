@@ -9,17 +9,19 @@ const argv =
   yargs
     .alias({
       'target': 't',
-      'envs': 'e',
+      'jsEnvs': 'j',
+      'htmlEnvs': 'h',
       'features': 'f',
       'ignoreFeatures': 'i',
       'recursive': 'r',
       'config': 'c'
     })
-    .array(['target', 'envs', 'features', 'ignoreFeatures'])
+    .array(['target', 'jsEnvs', 'htmlEnvs', 'features', 'ignoreFeatures'])
     .boolean(['supportedFeatures', 'supportedFeatureGroups', 'enabledFeatures', 'supportedEnvs'])
     .describe({
       'target': 'file(s) and directories containing files to check for compatibility',
-      'envs': 'environment(s) to check for compatiblity with',
+      'jsEnvs': 'environment(s) to check for JavaScript compatiblity',
+      'htmlEnvs': 'environment(s) to check for HTML compatiblity',
       'features': 'feature(s) and/or feature group(s) to check for',
       'ignoreFeatures': 'feature(s) and/or feature group(s) to ignore',
       'recursive': 'enters directories specified in target recursively',
@@ -31,7 +33,8 @@ const argv =
     })
     .default({
       'target': ['.'],
-      'envs': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
+      'jsEnvs': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
+      'htmlEnvs': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
       'features': ['js', 'html'],
       'ignoreFeatures': [],
       'config': './.compatrc.json'
@@ -94,7 +97,7 @@ function runCompat (compatTableLocation) {
 
   output.outputNonExistentTargets(nonExistentTargets)
 
-  const undefinedEnvs = compat.getUndefinedEnvs(compatTableLocation, argv.envs)
+  const undefinedEnvs = compat.getUndefinedEnvs(compatTableLocation, argv.jsEnvs, argv.htmlEnvs)
   output.outputUndefinedEnvs(undefinedEnvs)
 
   if (argv.enabledFeatures) {
@@ -102,7 +105,7 @@ function runCompat (compatTableLocation) {
     output.outputEnabledFeatures(enabledFeatures)
   }
 
-  const errors = compat.check(filesToCheck, argv.envs, argv.features, argv.ignoreFeatures, compatTableLocation)
+  const errors = compat.check(filesToCheck, argv.jsEnvs, argv.htmlEnvs, argv.features, argv.ignoreFeatures, compatTableLocation)
   output.outputErrors(errors)
 }
 
