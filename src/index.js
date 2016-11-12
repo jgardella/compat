@@ -47,7 +47,6 @@ if (argv.supportedFeatures ||
     argv.supportedFeatureGroups ||
     argv.supportedEnvs
 ) {
-  console.log('blah')
   if (argv.supportedFeatures) {
     const supportedFeatures = compat.getSupportedFeatures()
     output.outputSupportedFeatures(supportedFeatures)
@@ -68,7 +67,13 @@ if (argv.supportedFeatures ||
       runCompat(compatTableLocation)
     })
     .catch((err) => {
-      console.log('Error loading new compat table: ' + err)
+      console.log(err)
+      if (fs.existsSync(compatTableLocation)) {
+        console.log('Using previous compatability table.')
+        runCompat(compatTableLocation)
+      } else {
+        console.log('No previous compatibility table. Exiting.')
+      }
     })
 }
 
