@@ -96,6 +96,13 @@ function createJSTable () {
   })
 }
 
+function cleanup () {
+  fs.unlinkSync(tmpHtmlTable)
+  fs.unlinkSync(tmpES6Data)
+  fs.unlinkSync(tmpES2016PlusData)
+  fs.unlinkSync(tmpESNextBrowsers)
+}
+
 module.exports.createTable = (compatTableLocation) => {
   return new Promise((resolve, reject) => {
     createHTMLTable()
@@ -104,13 +111,16 @@ module.exports.createTable = (compatTableLocation) => {
           let fullTable = Object.assign(htmlTable, jsTable)
 
           fs.writeFileSync(compatTableLocation, JSON.stringify(fullTable, null, 2))
+          cleanup()
           resolve()
         })
         .catch((err) => {
+          cleanup()
           reject('Failed to create JS table: ' + err)
         })
       })
       .catch((err) => {
+        cleanup()
         reject('Failed to create HTML table: ' + err)
       })
   })
