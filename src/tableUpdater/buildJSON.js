@@ -25,7 +25,12 @@ module.exports.buildTable = (es6Data, es2016PlusData) => {
   let es6Table = getNewTable(es6)
   let es2016PlusTable = getNewTable(es2016plus)
 
-  return Object.assign(es6Table, es2016PlusTable)
+  let fullTable = {
+    envs: Object.assign({}, es6Table.envs, es2016PlusTable.envs),
+    compat: Object.assign({}, es6Table.compat, es6Table.compat)
+  }
+
+  return fullTable
 }
 
 function createBrowsersObject (options) {
@@ -50,7 +55,7 @@ function getNewTable (options) {
     compat: createCompatObject(options.browsers, options.tests, options.compiler)
   }
 
-  return createCompatObject(options.browsers, options.tests, options.compiler)
+  return obj
 }
 
 function createCompatObject (rawBrowsers, tests, compiler) {

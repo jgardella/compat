@@ -1,16 +1,23 @@
 let fs = require('fs')
 let check = require('./check.js')
-let envMap = require('./envs.js')
 let js = require('./js/index.js')
 let html = require('./html/index.js')
 
-exports.getSupportedEnvs = () => {
-  return envMap.envs
+function isEnvDefined (envTable, env) {
+  return Object.keys(envTable).some((envGroupId) => {
+    return Object.keys(envTable[envGroupId]).some((definedEnvId) => env === definedEnvId)
+  })
 }
 
-exports.getUndefinedEnvs = (envs) => {
+exports.getSupportedEnvs = (compatTableLocation) => {
+  return require(compatTableLocation).envs
+}
+
+exports.getUndefinedEnvs = (compatTableLocation, envs) => {
+  const envTable = require(compatTableLocation).envs
+
   return envs.filter((envId) => {
-    return !envMap.isEnvDefined(envId)
+    return !isEnvDefined(envTable, envId)
   })
 }
 
@@ -42,8 +49,10 @@ exports.getEnabledFeatures = (features, ignoreFeatures) => {
 }
 
 exports.check = (targets, envs, features, ignoreFeatures, compatTableLocation) => {
+  const envTable = require(compatTableLocation).envs
+
   const definedEnvs = envs.filter((envId) => {
-    return envMap.isEnvDefined(envId)
+    return isEnvDefined(envTable, envId)
   })
 
   const jsFeaturesToDetect = js.getEnabledFeatures(features, ignoreFeatures)

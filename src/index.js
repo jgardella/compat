@@ -58,23 +58,15 @@ if (argv.supportedFeatures ||
   }
 
   if (argv.supportedEnvs) {
-    const supportedEnvs = compat.getSupportedEnvs()
-    output.outputSupportedEnvs(supportedEnvs)
+    afterLoadingTable(compatTableLocation, (compatTableLocation) => {
+      const supportedEnvs = compat.getSupportedEnvs(compatTableLocation)
+      output.outputSupportedEnvs(supportedEnvs)
+    })
   }
 } else {
-  createTable.createTable(compatTableLocation)
-    .then(() => {
-      runCompat(compatTableLocation)
-    })
-    .catch((err) => {
-      console.log(err)
-      if (fs.existsSync(compatTableLocation)) {
-        console.log('Using previous compatability table.')
-        runCompat(compatTableLocation)
-      } else {
-        console.log('No previous compatibility table. Exiting.')
-      }
-    })
+  afterLoadingTable(compatTableLocation, (compatTableLocation) => {
+    runCompat(compatTableLocation)
+  })
 }
 
 function runCompat (compatTableLocation) {
@@ -102,7 +94,7 @@ function runCompat (compatTableLocation) {
 
   output.outputNonExistentTargets(nonExistentTargets)
 
-  const undefinedEnvs = compat.getUndefinedEnvs(argv.envs)
+  const undefinedEnvs = compat.getUndefinedEnvs(compatTableLocation, argv.envs)
   output.outputUndefinedEnvs(undefinedEnvs)
 
   if (argv.enabledFeatures) {
@@ -134,4 +126,20 @@ function getFilesInDirectory (path, recursive) {
       }
     })
   )
+}
+
+function afterLoadingTable (compatTableLocation, func) {
+  createTable.createTable(compatTableLocation)
+    .then(() => {
+      func(compatTableLocation)
+    })
+    .catch((err) => {
+      console.log(err)
+      if (fs.existsSync(compatTableLocation)) {
+        console.log('Using previous compatability table.')
+        func(compatTableLocation)
+      } else {
+        console.log('No previous compatibility table. Exiting.')
+      }
+    })
 }

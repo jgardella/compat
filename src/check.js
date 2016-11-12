@@ -6,7 +6,7 @@
  * @return Array detected compatiblilty errors
  */
 exports.checkFeatureCompatibility = (usedFeatures, envs, compatTableLocation) => {
-  let compatTable = require(compatTableLocation)
+  let compatTable = require(compatTableLocation).compat
 
   let errors = {}
 

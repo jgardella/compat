@@ -56,14 +56,17 @@ function createHTMLTable () {
       .then(() => {
         let obj = require(tmpHtmlTable)
         let data = obj.data
-        let htmlTable = {}
+        let htmlTableCompat = {}
 
         Object.keys(data).forEach((featureKey) => {
           let feature = data[featureKey]
-          htmlTable[feature.title] = collapseStats(feature.stats)
+          htmlTableCompat[feature.title] = collapseStats(feature.stats)
         })
 
-        resolve(htmlTable)
+        resolve({
+          envs: {},
+          compat: htmlTableCompat
+        })
       })
       .catch((err) => {
         reject(err)
@@ -108,7 +111,10 @@ module.exports.createTable = (compatTableLocation) => {
     createHTMLTable()
       .then((htmlTable) => {
         createJSTable().then((jsTable) => {
-          let fullTable = Object.assign(htmlTable, jsTable)
+          let fullTable = {
+            envs: Object.assign({}, htmlTable.envs, jsTable.envs),
+            compat: Object.assign({}, htmlTable.compat, jsTable.compat)
+          }
 
           fs.writeFileSync(compatTableLocation, JSON.stringify(fullTable, null, 2))
           cleanup()
