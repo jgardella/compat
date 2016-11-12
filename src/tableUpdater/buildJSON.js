@@ -26,32 +26,20 @@ module.exports.buildTable = (es6Data, es2016PlusData) => {
   let es2016PlusTable = getNewTable(es2016plus)
 
   let fullTable = {
-    envs: Object.assign({}, es6Table.envs, es2016PlusTable.envs),
+    envs: es6Table.envs.concat(es2016PlusTable.envs).filter((v, i, a) => a.indexOf(v) === i),
     compat: Object.assign({}, es6Table.compat, es6Table.compat)
   }
 
   return fullTable
 }
 
-function createBrowsersObject (options) {
-  var obj = {}
-
-  Object.keys(options.browsers).forEach((browserId) => {
-    const browserInfo = options.browsers[browserId]
-
-    if (obj[browserInfo.full] === undefined) {
-      obj[browserInfo.full] = {}
-    }
-
-    obj[browserInfo.full][browserId] = browserInfo
-  })
-
-  return obj
+function createBrowsersArray (options) {
+  return Object.keys(options.browsers)
 }
 
 function getNewTable (options) {
   var obj = {
-    envs: createBrowsersObject(options),
+    envs: createBrowsersArray(options),
     compat: createCompatObject(options.browsers, options.tests, options.compiler)
   }
 

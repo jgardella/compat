@@ -56,16 +56,27 @@ function createHTMLTable () {
       .then(() => {
         let obj = require(tmpHtmlTable)
         let data = obj.data
-        let htmlTableCompat = {}
+        let agents = obj.agents
+        let compat = {}
+        let envs = []
 
         Object.keys(data).forEach((featureKey) => {
           let feature = data[featureKey]
-          htmlTableCompat[feature.title] = collapseStats(feature.stats)
+          compat[feature.title] = collapseStats(feature.stats)
+        })
+
+        Object.keys(agents).forEach((agentKey) => {
+          let env = agents[agentKey]
+          env.versions.forEach((version) => {
+            if (version !== null) {
+              envs.push(agentKey + version)
+            }
+          })
         })
 
         resolve({
-          envs: {},
-          compat: htmlTableCompat
+          envs: envs,
+          compat: compat
         })
       })
       .catch((err) => {
@@ -99,11 +110,17 @@ function createJSTable () {
   })
 }
 
+function deleteIfExists (path) {
+  if (fs.existsSync(path)) {
+    fs.unlinkSync(path)
+  }
+}
+
 function cleanup () {
-  fs.unlinkSync(tmpHtmlTable)
-  fs.unlinkSync(tmpES6Data)
-  fs.unlinkSync(tmpES2016PlusData)
-  fs.unlinkSync(tmpESNextBrowsers)
+  deleteIfExists(tmpHtmlTable)
+  deleteIfExists(tmpES6Data)
+  deleteIfExists(tmpES2016PlusData)
+  deleteIfExists(tmpESNextBrowsers)
 }
 
 module.exports.createTable = (compatTableLocation) => {
@@ -112,7 +129,7 @@ module.exports.createTable = (compatTableLocation) => {
       .then((htmlTable) => {
         createJSTable().then((jsTable) => {
           let fullTable = {
-            envs: Object.assign({}, htmlTable.envs, jsTable.envs),
+            envs: htmlTable.envs.concat(jsTable.envs).filter((v, i, a) => a.indexOf(v) === i),
             compat: Object.assign({}, htmlTable.compat, jsTable.compat)
           }
 

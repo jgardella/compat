@@ -84,12 +84,8 @@ module.exports.outputEnabledFeatures = (enabledFeatures) => {
 
 module.exports.outputSupportedEnvs = (supportedEnvs) => {
   console.log(colors.bold('Supported Envs: '))
-  Object.keys(supportedEnvs).forEach((envGroupId) => {
-    const envGroup = supportedEnvs[envGroupId]
-    console.log('  ' + colors.bold(envGroupId))
-    Object.keys(envGroup).forEach((envId) => {
-      console.log('    ' + envId)
-    })
+  supportedEnvs.forEach((envId) => {
+    console.log('  ' + envId)
   })
 }
 
