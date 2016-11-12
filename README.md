@@ -1,10 +1,10 @@
 # compat.js
 
-Static analysis tool for detecting browser compatibility issues in JavaScript code.
+Static analysis tool for detecting browser compatibility issues in JavaScript and HTML.
 
 # Usage
 
-By default, compat will check files ending with `.js` in the current directory.
+By default, compat will check files ending with `.js` or `.html` in the current directory.
 
 ```
 compat

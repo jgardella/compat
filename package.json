@@ -1,7 +1,7 @@
 {
   "name": "compat",
   "version": "0.0.1",
-  "description": "Static analysis to detect browser compatiblity issues in JavaScript code.",
+  "description": "Static analysis to detect browser compatiblity issues in JavaScript and HTML.",
   "author": "Jason Gardella <jason.a.gardella@gmail.com>",
   "repository": {
     "type": "git",
