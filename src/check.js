@@ -24,7 +24,10 @@ exports.checkFeatureCompatibility = (usedFeatures, envs) => {
       }
       envs.forEach((env) => {
         const featureSupported = compatTable.featureSupportedByEnv(feature, env)
-        if (featureSupported === 'flag' || typeof featureSupported === 'number') {
+        if (featureSupported === 'flag' ||
+            featureSupported === 'p' ||
+            typeof featureSupported === 'number'
+        ) {
           error.partialEnvs.push(env)
         } else if (featureSupported === false) {
           error.incompatEnvs.push(env)

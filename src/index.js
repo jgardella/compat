@@ -71,7 +71,9 @@ if (argv.supportedFeatures ||
         const fileStat = fs.lstatSync(fileName)
         if (fileStat.isDirectory()) {
           return getFilesInDirectory(fileName, argv.recursive)
-            .filter((fileName) => { return fileName.endsWith('.js') })
+            .filter((fileName) => {
+              return fileName.endsWith('.html') || fileName.endsWith('.js')
+            })
         } else {
           return [fileName]
         }

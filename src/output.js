@@ -26,8 +26,10 @@ module.exports.outputErrors = (errors) => {
             }
 
             error.features.forEach((feature) => {
-              console.log(colors.bold('    ' + 'on line ' + colors.underline(feature.loc.start.line) + ':'))
-              console.log(indentString(fileContents.slice(feature.range[0], feature.range[1]), 6))
+              if (feature.loc !== undefined) {
+                console.log(colors.bold('    ' + 'on line ' + colors.underline(feature.loc.start.line) + ':'))
+                console.log(indentString(fileContents.slice(feature.range[0], feature.range[1]), 6))
+              }
             })
           }
         }
@@ -70,7 +72,6 @@ module.exports.outputSupportedFeatureGroups = (featureGroupMap) => {
 }
 
 module.exports.outputEnabledFeatures = (enabledFeatures) => {
-  debugger
   console.log(colors.bold('Enabled Features: '))
   Object.keys(enabledFeatures).forEach((featureType) => {
     console.log(colors.bold('  ' + featureType))
