@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/jgardella/compat.git"
   },
-  "main": "src/compat.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node src/compat.js",
     "test": "mocha --recursive test",
