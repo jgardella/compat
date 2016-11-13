@@ -3,6 +3,9 @@ let path = require('path')
 let https = require('https')
 let buildJSON = require('./buildJSON.js')
 
+const dataDir = path.join(__dirname, '../../data')
+const tmpDataDir = path.join(__dirname, '../../data/tmp')
+
 const tmpHtmlTable = path.join(__dirname, '../../data/tmp/htmlTable.json')
 const tmpES6Data = path.join(__dirname, '../../data/tmp/data-es6.js')
 const tmpES2016PlusData = path.join(__dirname, '../../data/tmp/data-es2016plus.js')
@@ -37,7 +40,7 @@ function downloadFile (url, filePath) {
         })
       })
       .on('error', (err) => {
-        reject('Failed to download file at ' + url + ', ' + err)
+        reject('Failed to download file at ' + url + ' (' + err + ')')
       })
     })
   })
@@ -134,7 +137,7 @@ function getLatestCommitSHA (owner, repo, ref) {
       }
     })
     .on('error', (err) => {
-      reject('Failed to load commit SHA at path ' + path + ', ' + err)
+      reject('Failed to load commit SHA at path ' + path + ' (' + err + ')')
     })
   })
 }
@@ -174,6 +177,23 @@ function isUpToDate (compatTableLocation) {
   })
 }
 
+function createDirectoryStructure () {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dataDir, (err) => {
+      if (err && err.code !== 'EEXIST') {
+        reject('Error creating folder ' + dataDir + ' (' + err + ')')
+      } else {
+        fs.mkdir(tmpDataDir, (err) => {
+          if (err && err.code !== 'EEXIST') {
+            reject('Error creating folder ' + tmpDataDir + ' (' + err + ')')
+          }
+          resolve()
+        })
+      }
+    })
+  })
+}
+
 function deleteIfExists (path) {
   if (fs.existsSync(path)) {
     fs.unlinkSync(path)
@@ -189,34 +209,39 @@ function cleanup () {
 
 module.exports.createTable = (compatTableLocation) => {
   return new Promise((resolve, reject) => {
-    isUpToDate(compatTableLocation).then((upToDate) => {
-      if (upToDate) {
-        resolve(false)
-      } else {
-        createHTMLTable()
-          .then((htmlTable) => {
-            createJSTable().then((jsTable) => {
-              let fullTable = {
-                htmlEnvs: htmlTable.envs,
-                jsEnvs: jsTable.envs,
-                compat: Object.assign({}, htmlTable.compat, jsTable.compat)
-              }
+    createDirectoryStructure().then(() => {
+      isUpToDate(compatTableLocation).then((upToDate) => {
+        if (upToDate) {
+          resolve(false)
+        } else {
+          createHTMLTable()
+            .then((htmlTable) => {
+              createJSTable().then((jsTable) => {
+                let fullTable = {
+                  htmlEnvs: htmlTable.envs,
+                  jsEnvs: jsTable.envs,
+                  compat: Object.assign({}, htmlTable.compat, jsTable.compat)
+                }
 
-              fs.writeFileSync(compatTableLocation, JSON.stringify(fullTable, null, 2))
-              cleanup()
-              resolve(true)
+                fs.writeFileSync(compatTableLocation, JSON.stringify(fullTable, null, 2))
+                cleanup()
+                resolve(true)
+              })
+              .catch((err) => {
+                cleanup()
+                reject('Failed to create JS table: ' + err)
+              })
             })
             .catch((err) => {
               cleanup()
-              reject('Failed to create JS table: ' + err)
+              reject('Failed to create HTML table: ' + err)
             })
-          })
-          .catch((err) => {
-            cleanup()
-            reject('Failed to create HTML table: ' + err)
-          })
-      }
-    }).catch((err) => {
+        }
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+    .catch((err) => {
       reject(err)
     })
   })
