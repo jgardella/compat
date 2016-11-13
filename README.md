@@ -70,6 +70,12 @@ The config file must end with `.json`.
 compat --config ./configs/compat-config.json
 ```
 
+When run, compat will try to update its locally stored compatibility table if the sources
+for compatibility info have changed. Info for JS compatibility is loaded from
+[kangax's compat-table](https://github.com/kangax/compat-table) and info for HTML compatibility is loaded from
+[fyrd's caniuse](https://github.com/fyrd/caniuse). If the updated tables cannot be loaded for
+some reason, compat will use the last table it downloaded for checking compatibility.
+
 # Testing
 
 Run tests with:
