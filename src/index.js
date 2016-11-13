@@ -133,7 +133,12 @@ function getFilesInDirectory (path, recursive) {
 
 function afterLoadingTable (compatTableLocation, func) {
   createTable.createTable(compatTableLocation)
-    .then(() => {
+    .then((updated) => {
+      if (updated) {
+        console.log('Compatibility table updated.')
+      } else {
+        console.log('Compatibility table already up to date.')
+      }
       func(compatTableLocation)
     })
     .catch((err) => {
