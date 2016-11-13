@@ -1,4 +1,4 @@
-# compat.js
+# compat.js [![Build Status](https://travis-ci.org/jgardella/compat.svg?branch=master)](https://travis-ci.org/jgardella/compat)
 
 Static analysis tool for detecting browser compatibility issues in JavaScript and HTML.
 
