@@ -1,22 +1,26 @@
 let fs = require('fs')
+let os = require('os')
 let path = require('path')
 let https = require('https')
+let npm = require('npm-programmatic')
 let buildJSON = require('./buildJSON.js')
 
-const dataDir = path.join(__dirname, '../../data')
-const tmpDataDir = path.join(__dirname, '../../data/tmp')
+const homeDir = os.homedir()
 
-const tmpHtmlTable = path.join(__dirname, '../../data/tmp/htmlTable.json')
-const tmpES6Data = path.join(__dirname, '../../data/tmp/data-es6.js')
-const tmpES2016PlusData = path.join(__dirname, '../../data/tmp/data-es2016plus.js')
-const tmpESNextBrowsers = path.join(__dirname, '../../data/tmp/esnext-browsers.js')
+const dataDir = path.join(homeDir, '/.compat-data')
+const tmpDataDir = path.join(homeDir, '/.compat-data/tmp')
+
+const tmpHtmlTable = path.join(homeDir, '/.compat-data/tmp/htmlTable.json')
+const tmpES6Data = path.join(homeDir, '/.compat-data/tmp/data-es6.js')
+const tmpES2016PlusData = path.join(homeDir, '/.compat-data/tmp/data-es2016plus.js')
+const tmpESNextBrowsers = path.join(homeDir, '/.compat-data/tmp/environments.js')
 
 const htmlDataURL = 'https://raw.githubusercontent.com/Fyrd/caniuse/master/data.json'
 const es6DataURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/data-es6.js'
-const es2016PlusDataURL = 'https://raw.githubusercontent.com/jgardella/compat-table/gh-pages/data-es2016plus.js'
-const esNextBrowsersURL = 'https://raw.githubusercontent.com/jgardella/compat-table/gh-pages/esnext-browsers.js'
+const es2016PlusDataURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/data-es2016plus.js'
+const esNextBrowsersURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/environments.js'
 
-const shaFile = path.join(__dirname, '../../data/shas.json')
+const shaFile = path.join(homeDir, '/.compat-data/shas.json')
 
 function githubAPIOptions (path) {
   return {
@@ -101,6 +105,16 @@ function createHTMLTable () {
   })
 }
 
+function installJSDeps () {
+  return npm.install(['object.assign'], {
+    cwd: tmpDataDir,
+    save: false
+  })
+}
+
+// until compat-table offers its data in a JSON format, it
+// has to built manually by pulling JS files from the repo
+// and installing dependencies manually
 function createJSTable () {
   return new Promise((resolve, reject) => {
     downloadFile(es6DataURL, tmpES6Data)
@@ -109,8 +123,14 @@ function createJSTable () {
           .then(() => {
             downloadFile(esNextBrowsersURL, tmpESNextBrowsers)
               .then(() => {
-                let jsTable = buildJSON.buildTable(tmpES6Data, tmpES2016PlusData)
-                resolve(jsTable)
+                installJSDeps()
+                  .then(() => {
+                    let jsTable = buildJSON.buildTable(tmpES6Data, tmpES2016PlusData)
+                    resolve(jsTable)
+                  })
+                  .catch((err) => {
+                    reject(err)
+                  })
               })
               .catch((err) => {
                 reject(err)
@@ -186,8 +206,9 @@ function createDirectoryStructure () {
         fs.mkdir(tmpDataDir, (err) => {
           if (err && err.code !== 'EEXIST') {
             reject('Error creating folder ' + tmpDataDir + ' (' + err + ')')
+          } else {
+            resolve()
           }
-          resolve()
         })
       }
     })

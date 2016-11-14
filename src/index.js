@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 let yargs = require('yargs')
 let fs = require('fs')
+let os = require('os')
 let path = require('path')
 let compat = require('./compat.js')
 let output = require('./output.js')
@@ -45,7 +46,7 @@ const argv =
     .help(false)
     .argv
 
-const compatTableLocation = path.join(__dirname, '../data/compatTable.json')
+const compatTableLocation = path.join(os.homedir(), '/.compat-data/compatTable.json')
 
 if (argv.supportedFeatures ||
     argv.supportedFeatureGroups ||
