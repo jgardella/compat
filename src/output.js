@@ -12,6 +12,8 @@ module.exports.outputErrors = (errors) => {
         const error = fileErrors[fileErrorKey]
         if (error.error === 'featureUndefined') {
           console.log(colors.blue('undefined feature: ' + fileErrorKey))
+        } else if (error.error === 'parse') {
+          console.log(colors.red('parse error: ' + error.msg))
         } else if (error.error === 'incompatibility') {
           const incompatEnvString = error.incompatEnvs.join(', ')
           const partialEnvString = error.partialEnvs.join(', ')

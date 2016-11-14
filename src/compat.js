@@ -72,6 +72,7 @@ exports.check = (targets, jsEnvs, htmlEnvs, features, ignoreFeatures, compatTabl
   const htmlFeaturesToDetect = html.getEnabledFeatures(features, ignoreFeatures)
 
   let obj = {}
+  let parseError = {}
   targets.forEach((fileName) => {
     let fileContents = fs.readFileSync(fileName, 'utf8')
     let jsFeatures = {}
@@ -79,7 +80,17 @@ exports.check = (targets, jsEnvs, htmlEnvs, features, ignoreFeatures, compatTabl
 
     if (fileName.match(js.fileRegex)) {
       let newFeatures = js.check(fileContents, jsFeaturesToDetect)
-      Object.assign(jsFeatures, newFeatures)
+
+      if (newFeatures.type === 'success') {
+        Object.assign(jsFeatures, newFeatures.features)
+      } else if (newFeatures.type === 'error') {
+        parseError = {
+          parse: {
+            error: 'parse',
+            msg: newFeatures.errorMsg
+          }
+        }
+      }
     }
 
     if (fileName.match(html.fileRegex)) {
@@ -89,7 +100,7 @@ exports.check = (targets, jsEnvs, htmlEnvs, features, ignoreFeatures, compatTabl
 
     const jsErrors = check.checkFeatureCompatibility(jsFeatures, definedJSEnvs, compatTableLocation)
     const htmlErrors = check.checkFeatureCompatibility(htmlFeatures, definedHTMLEnvs, compatTableLocation)
-    const allErrors = Object.assign({}, jsErrors, htmlErrors)
+    const allErrors = Object.assign({}, parseError, jsErrors, htmlErrors)
     if (Object.keys(allErrors).length > 0) {
       obj[fileName] = allErrors
     }

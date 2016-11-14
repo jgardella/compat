@@ -13,10 +13,23 @@ const esprimaOptions = {
  * only scanning for the provided list of features.
  * @param program {string} program text
  * @param features array of features to look for
+ * @return Object with type success on success, or
+ * type error if an error occuring when parsing the program
  */
 function withFeatures (program, features) {
-  const ast = esprima.parse(program, esprimaOptions)
-  return traverseAST(ast, features)
+  try {
+    const ast = esprima.parse(program, esprimaOptions)
+    const foundFeatures = traverseAST(ast, features)
+    return {
+      type: 'success',
+      features: foundFeatures
+    }
+  } catch (e) {
+    return {
+      type: 'error',
+      errorMsg: e
+    }
+  }
 }
 
 /**
