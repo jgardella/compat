@@ -6,7 +6,7 @@ module.exports = function (program, feature) {
     throw new Error('Feature not defined.')
   }
 
-  let foundFeatures = detect.withFeatures(program, [feature])
+  let foundFeatures = detect.withFeatures(program, [feature]).features
 
   assert.equal(true,
     Object.keys(foundFeatures).some((key) => {

@@ -5,9 +5,10 @@ module.exports.outputErrors = (errors) => {
   const numErrors = Object.getOwnPropertyNames(errors).length
   if (numErrors > 0) {
     Object.keys(errors).forEach((fileName) => {
+      const numFileErrors = Object.getOwnPropertyNames(errors[fileName]).length
       const fileErrors = errors[fileName]
       const fileContents = fs.readFileSync(fileName, 'utf8')
-      console.log(colors.bold(colors.underline(fileName) + '": ') + colors.red(numErrors + ' errors'))
+      console.log(colors.bold(colors.underline(fileName) + '": ') + colors.red(numFileErrors + ' errors'))
       Object.keys(fileErrors).forEach((fileErrorKey) => {
         const error = fileErrors[fileErrorKey]
         if (error.error === 'featureUndefined') {
