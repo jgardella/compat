@@ -1,6 +1,6 @@
 {
-  "name": "compat",
-  "version": "0.0.1",
+  "name": "compat-cli",
+  "version": "0.1.0",
   "description": "Static analysis to detect browser compatiblity issues in JavaScript and HTML.",
   "author": "Jason Gardella <jason.a.gardella@gmail.com>",
   "repository": {
@@ -8,11 +8,17 @@
     "url": "https://github.com/jgardella/compat.git"
   },
   "main": "src/index.js",
+  "bin": {
+    "compat": "src/index.js"
+  },
   "scripts": {
     "start": "node src/compat.js",
     "test": "mocha --recursive test",
     "lint": "standard"
   },
+  "files": [
+    "src/"
+  ],
   "license": "MIT",
   "dependencies": {
     "colors": "^1.1.2",
