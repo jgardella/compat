@@ -7,6 +7,13 @@
     "type": "git",
     "url": "https://github.com/jgardella/compat.git"
   },
+  "keywords": [
+    "compatibility",
+    "static analysis",
+    "browser",
+    "js",
+    "cli"
+  ],
   "main": "src/index.js",
   "bin": {
     "compat": "src/index.js"
