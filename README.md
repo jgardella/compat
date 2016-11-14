@@ -2,6 +2,14 @@
 
 Static analysis tool for detecting browser compatibility issues in JavaScript and HTML.
 
+# Installation
+
+```
+npm install compat
+```
+
+Note: compat currently cannot be installed globally.
+
 # Usage
 
 By default, compat will check files ending with `.js` or `.html` in the current directory.
