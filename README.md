@@ -5,7 +5,7 @@ Static analysis tool for detecting browser compatibility issues in JavaScript an
 # Installation
 
 ```
-npm install compat
+npm install compat-cli
 ```
 
 Note: compat currently cannot be installed globally.
