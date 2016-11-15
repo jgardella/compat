@@ -8,8 +8,6 @@ Static analysis tool for detecting browser compatibility issues in JavaScript an
 npm install compat-cli
 ```
 
-Note: compat currently cannot be installed globally.
-
 # Usage
 
 By default, compat will check files ending with `.js` or `.html` in the current directory.
