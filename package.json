@@ -1,6 +1,6 @@
 {
   "name": "compat-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Static analysis to detect browser compatiblity issues in JavaScript and HTML.",
   "author": "Jason Gardella <jason.a.gardella@gmail.com>",
   "repository": {
