@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 ping attribute.
  */
-exports.func = (name, attributes) => {
-  if (name === 'a' &&
-      attributes.ping !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['a']) &&
+      util.hasSomeAttribute(node, ['ping'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

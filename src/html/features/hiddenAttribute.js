@@ -7,9 +7,8 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 hidden attribute.
  */
-exports.func = (name, attributes) => {
-  if (attributes.hidden !== undefined
-  ) {
-    return util.createFeature(name, TYPE)
+exports.func = (node) => {
+  if (util.hasSomeAttribute(node, ['hidden'])) {
+    return util.createFeature(node, TYPE)
   }
 }

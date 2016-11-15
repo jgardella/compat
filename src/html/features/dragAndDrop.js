@@ -7,8 +7,8 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 dragable attribute.
  */
-exports.func = (name, attributes) => {
-  if (attributes.draggable !== undefined) {
-    return util.createFeature(name, TYPE)
+exports.func = (node) => {
+  if (util.hasSomeAttribute(node, ['draggable'])) {
+    return util.createFeature(node, TYPE)
   }
 }

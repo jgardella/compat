@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 iframe srcdoc attribute.
  */
-exports.func = (name, attributes) => {
-  if (name === 'iframe' &&
-      attributes.srcdoc !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['iframe']) &&
+      util.hasSomeAttribute(node, ['srcdoc'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

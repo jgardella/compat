@@ -7,11 +7,11 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 file input accept attribute.
  */
-exports.func = (name, attributes) => {
-  if (name === 'input' &&
-      attributes.type === 'file' &&
-      attributes.accept !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['input']) &&
+      util.hasSomeAttribute(node, ['accept']) &&
+      util.attributeIs(node, 'type', 'file')
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

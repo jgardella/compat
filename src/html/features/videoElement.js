@@ -7,8 +7,8 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 video element.
  */
-exports.func = (name, attributes) => {
-  if (name === 'video') {
-    return util.createFeature(name, TYPE)
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['video'])) {
+    return util.createFeature(node, TYPE)
   }
 }

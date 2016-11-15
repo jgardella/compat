@@ -7,11 +7,11 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 PNG favicons.
  */
-exports.func = (name, attributes) => {
-  if (name === 'link' &&
-      attributes.rel === 'icon' &&
-      attributes.type === 'image/png'
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['link']) &&
+      util.attributeIs(node, 'rel', 'icon') &&
+      util.attributeIs(node, 'type', 'image/png')
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

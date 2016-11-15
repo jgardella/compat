@@ -7,9 +7,8 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 tabindex global attribute.
  */
-exports.func = (name, attributes) => {
-  if (attributes.tabindex !== undefined
-  ) {
-    return util.createFeature(name, TYPE)
+exports.func = (node) => {
+  if (util.hasSomeAttribute(node, ['tabindex'])) {
+    return util.createFeature(node, TYPE)
   }
 }

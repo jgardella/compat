@@ -7,12 +7,12 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 SVG favicons.
  */
-exports.func = (name, attributes) => {
-  if (name === 'link' &&
-      attributes.rel === 'icon' &&
-      attributes.sizes === 'any' &&
-      attributes.type === 'image/svg+xml'
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['link']) &&
+      util.attributeIs(node, 'rel', 'icon') &&
+      util.attributeIs(node, 'sizes', 'any') &&
+      util.attributeIs(node, 'type', 'image/svg+xml')
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

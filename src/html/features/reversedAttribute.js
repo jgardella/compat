@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 ordered list reversed attribute.
  */
-exports.func = (name, attributes) => {
-  if (name === 'ol' &&
-      attributes.reversed !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['ol']) &&
+      util.hasSomeAttribute(node, ['reversed'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

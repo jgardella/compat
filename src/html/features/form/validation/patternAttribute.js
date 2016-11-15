@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 input field pattern attribute.
  */
-exports.func = (name, attributes) => {
-  if (name === 'input' &&
-      attributes.pattern !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['input']) &&
+      util.hasSomeAttribute(node, ['pattern'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

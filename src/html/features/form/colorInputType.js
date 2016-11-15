@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 color input type.
  */
-exports.func = (name, attributes) => {
-  if (name === 'input' &&
-      attributes.type === 'color'
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['input']) &&
+      util.attributeIs(node, 'type', 'color')
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

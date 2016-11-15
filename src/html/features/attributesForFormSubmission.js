@@ -5,27 +5,20 @@ const TYPE = 'Attributes for form submission'
 exports.type = TYPE
 
 /**
- * Detects usage of HTML5 form submission attributes.
+ * Detects usage of HTML5 form submission node.attribs.
  */
-exports.func = (name, attributes) => {
-  if ((name === 'form' &&
-      (attributes.action !== undefined ||
-       attributes.enctype !== undefined ||
-       attributes.method !== undefined ||
-       attributes.novalidate !== undefined ||
-       attributes.target !== undefined)) ||
-      ((name === 'button' ||
-        name === 'input' ||
-        name === 'keygen' ||
-        name === 'object' ||
-        name === 'select' ||
-        name === 'textarea') &&
-          attributes.formaction !== undefined ||
-          attributes.formenctype !== undefined ||
-          attributes.formmethod !== undefined ||
-          attributes.formnovalidate !== undefined ||
-          attributes.formtarget !== undefined)
+exports.func = (node) => {
+  if ((util.hasSomeName(node, ['form']) &&
+      util.hasSomeAttribute(node, [
+        'action', 'enctype', 'method', 'novalidate', 'target'
+      ])) || (
+      util.hasSomeName(node, [
+        'button', 'input', 'keygen', 'object', 'select', 'textarea'
+      ]) &&
+      util.hasSomeAttribute(node, [
+        'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget'
+      ]))
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

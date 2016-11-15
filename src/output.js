@@ -8,6 +8,7 @@ module.exports.outputErrors = (errors) => {
       const numFileErrors = Object.getOwnPropertyNames(errors[fileName]).length
       const fileErrors = errors[fileName]
       const fileContents = fs.readFileSync(fileName, 'utf8')
+      const maxRange = fileContents.length - 1
       console.log(colors.bold(colors.underline(fileName) + '": ') + colors.red(numFileErrors + ' errors'))
       Object.keys(fileErrors).forEach((fileErrorKey) => {
         const error = fileErrors[fileErrorKey]
@@ -31,7 +32,11 @@ module.exports.outputErrors = (errors) => {
             error.features.forEach((feature) => {
               if (feature.loc !== undefined) {
                 console.log(colors.bold('    ' + 'on line ' + colors.underline(feature.loc.start.line) + ':'))
+              }
+              if (feature.range.length === 2) {
                 console.log(indentString(fileContents.slice(feature.range[0], feature.range[1]), 6))
+              } else if (feature.range.length === 1) {
+                console.log(indentString(fileContents.slice(feature.range[0], Math.min(feature.range[0] + 20, maxRange)), 6))
               }
             })
           }

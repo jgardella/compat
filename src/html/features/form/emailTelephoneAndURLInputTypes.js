@@ -7,12 +7,12 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 email, telephone, and URL input types.
  */
-exports.func = (name, attributes) => {
-  if (name === 'input' &&
-      (attributes.type === 'email' ||
-       attributes.type === 'tel' ||
-       attributes.type === 'url')
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['input']) &&
+      (util.attributeIs(node, 'type', 'email') ||
+      util.attributeIs(node, 'type', 'tel') ||
+      util.attributeIs(node, 'type', 'url'))
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

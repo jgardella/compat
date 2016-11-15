@@ -7,11 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 textarea/input spellcheck attribute.
  */
-exports.func = (name, attributes) => {
-  if ((name === 'textarea' ||
-       name === 'input') &&
-      attributes.spellcheck !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['textarea', 'input']) &&
+      util.hasSomeAttribute(node, ['spellcheck'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

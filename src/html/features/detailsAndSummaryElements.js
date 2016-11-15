@@ -7,10 +7,8 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 details and summary elements.
  */
-exports.func = (name, attributes) => {
-  if (name === 'details' ||
-      name === 'summary'
-  ) {
-    return util.createFeature(name, TYPE)
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['details', 'summary'])) {
+    return util.createFeature(node, TYPE)
   }
 }

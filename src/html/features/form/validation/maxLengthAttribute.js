@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 input/textarea maxlength attribute.
  */
-exports.func = (name, attributes) => {
-  if ((name === 'input' || name === 'textarea') &&
-      attributes.maxlength !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['input', 'textarea']) &&
+      util.hasSomeAttribute(node, ['maxlength'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

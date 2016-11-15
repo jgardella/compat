@@ -7,17 +7,19 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 form attribute on inputs.
  */
-exports.func = (name, attributes) => {
-  if ((name === 'button' ||
-       name === 'fieldset' ||
-       name === 'input' ||
-       name === 'keygen' ||
-       name === 'object' ||
-       name === 'output' ||
-       name === 'select' ||
-       name === 'textarea') &&
-      attributes.form !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, [
+    'button',
+    'fieldset',
+    'input',
+    'keygen',
+    'object',
+    'output',
+    'select',
+    'textarea'
+  ]) &&
+      util.hasSomeAttribute(node, ['form'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

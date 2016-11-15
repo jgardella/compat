@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 number input type.
  */
-exports.func = (name, attributes) => {
-  if (name === 'input' &&
-      attributes.type === 'number'
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['input']) &&
+      util.attributeIs(node, 'type', 'number')
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

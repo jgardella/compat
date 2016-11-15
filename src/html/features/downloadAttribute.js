@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 download attribute.
  */
-exports.func = (name, attributes) => {
-  if (name === 'a' &&
-      attributes.download !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['a']) &&
+      util.hasSomeAttribute(node, ['download'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

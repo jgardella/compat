@@ -7,8 +7,8 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 ruby annotation.
  */
-exports.func = (name, attributes) => {
-  if (name === 'ruby') {
-    return util.createFeature(name, TYPE)
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['ruby'])) {
+    return util.createFeature(node, TYPE)
   }
 }

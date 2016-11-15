@@ -7,10 +7,10 @@ exports.type = TYPE
 /**
  * Detects usage of HTML5 img srcset attribute.
  */
-exports.func = (name, attributes) => {
-  if (name === 'img' &&
-      attributes.srcset !== undefined
+exports.func = (node) => {
+  if (util.hasSomeName(node, ['img']) &&
+      util.hasSomeAttribute(node, ['srcset'])
   ) {
-    return util.createFeature(name, TYPE)
+    return util.createFeature(node, TYPE)
   }
 }

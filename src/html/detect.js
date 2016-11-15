@@ -1,4 +1,5 @@
 let htmlparser = require('htmlparser2')
+let domutils = require('domutils')
 
 /**
  * Detects features in the provided html text,
@@ -9,22 +10,51 @@ let htmlparser = require('htmlparser2')
 exports.withFeatures = (html, features) => {
   let foundFeatures = {}
 
-  let parser =
-    new htmlparser.Parser({
-      onopentag: (name, attributes) => {
-        features.forEach((feature) => {
-          let foundFeature = feature.func(name, attributes)
-          if (foundFeature !== undefined) {
-            if (foundFeatures[foundFeature.type] === undefined) {
-              foundFeatures[foundFeature.type] = []
-            }
-            foundFeatures[foundFeature.type].push(foundFeature)
-          }
-        })
+  let handler =
+    new htmlparser.DomHandler((err, dom) => {
+      if (err !== null) {
+        foundFeatures = {
+          type: 'error',
+          errorMsg: err
+        }
       }
-    }, { decodeEntities: true })
 
+      foundFeatures = traverseDOM(dom, features)
+    }, { withStartIndices: true })
+
+  let parser = new htmlparser.Parser(handler)
   parser.write(html)
   parser.end()
+
+  return foundFeatures
+}
+
+function applyFuncToDOMNodes (dom, func) {
+  func(dom)
+  const children = domutils.getChildren(dom)
+  if (children !== undefined) {
+    children.forEach((child) => {
+      applyFuncToDOMNodes(child, func)
+    })
+  }
+}
+
+function traverseDOM (dom, features) {
+  let foundFeatures = {}
+
+  dom.forEach((topLevelNode) => {
+    applyFuncToDOMNodes(topLevelNode, (node) => {
+      features.forEach((feature) => {
+        let foundFeature = feature.func(node)
+        if (foundFeature !== undefined) {
+          if (foundFeatures[foundFeature.type] === undefined) {
+            foundFeatures[foundFeature.type] = []
+          }
+          foundFeatures[foundFeature.type].push(foundFeature)
+        }
+      })
+    })
+  })
+
   return foundFeatures
 }
