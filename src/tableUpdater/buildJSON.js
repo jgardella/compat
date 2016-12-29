@@ -18,19 +18,30 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+var pickBy = require('lodash.pickby')
+
 // Adapted from https://github.com/kangax/compat-table/blob/gh-pages/build.js
-module.exports.buildTable = (es6Data, es2016PlusData) => {
+module.exports.buildTable = (es6Data, es2016PlusData, environmentsData) => {
   var es6 = require(es6Data)
   var es2016plus = require(es2016PlusData)
+  var environments = require(environmentsData)
+  es6.browsers = pickBy(environments, byTestSuite('es6'))
+  es2016plus.browsers = pickBy(environments, byTestSuite('es2016plus'))
   let es6Table = getNewTable(es6)
   let es2016PlusTable = getNewTable(es2016plus)
 
   let fullTable = {
     envs: es6Table.envs.concat(es2016PlusTable.envs).filter((v, i, a) => a.indexOf(v) === i),
-    compat: Object.assign({}, es6Table.compat, es6Table.compat)
+    compat: Object.assign({}, es6Table.compat, es2016PlusTable.compat)
   }
 
   return fullTable
+}
+
+var byTestSuite = function (suite) {
+  return function (browser) {
+    return Array.isArray(browser.test_suites) ? browser.test_suites.indexOf(suite) > -1 : true
+  }
 }
 
 function createBrowsersArray (options) {

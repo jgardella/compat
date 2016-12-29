@@ -13,12 +13,14 @@ const tmpDataDir = path.join(homeDir, '/.compat-data/tmp')
 const tmpHtmlTable = path.join(homeDir, '/.compat-data/tmp/htmlTable.json')
 const tmpES6Data = path.join(homeDir, '/.compat-data/tmp/data-es6.js')
 const tmpES2016PlusData = path.join(homeDir, '/.compat-data/tmp/data-es2016plus.js')
-const tmpESNextBrowsers = path.join(homeDir, '/.compat-data/tmp/environments.js')
+const tmpEnvironmentsData = path.join(homeDir, '/.compat-data/tmp/environments.json')
+const tmpCommonData = path.join(homeDir, '/.compat-data/tmp/data-common.json')
 
 const htmlDataURL = 'https://raw.githubusercontent.com/Fyrd/caniuse/master/data.json'
 const es6DataURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/data-es6.js'
 const es2016PlusDataURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/data-es2016plus.js'
-const esNextBrowsersURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/environments.js'
+const environmentsURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/environments.json'
+const commonDataURL = 'https://raw.githubusercontent.com/kangax/compat-table/gh-pages/data-common.json'
 
 const shaFile = path.join(homeDir, '/.compat-data/shas.json')
 
@@ -47,6 +49,18 @@ function downloadFile (url, filePath) {
         reject('Failed to download file at ' + url + ' (' + err + ')')
       })
     })
+  })
+}
+
+function downloadFiles (urls, folderPath) {
+  return new Promise((resolve, reject) => {
+    urls.forEach((url) => {
+      downloadFile(url, folderPath + url.slice(url.lastIndexOf('/')))
+        .catch((err) => {
+          reject(err)
+        })
+    })
+    resolve()
   })
 }
 
@@ -117,24 +131,12 @@ function installJSDeps () {
 // and installing dependencies manually
 function createJSTable () {
   return new Promise((resolve, reject) => {
-    downloadFile(es6DataURL, tmpES6Data)
+    downloadFiles([es6DataURL, es2016PlusDataURL, commonDataURL, environmentsURL], tmpDataDir)
       .then(() => {
-        downloadFile(es2016PlusDataURL, tmpES2016PlusData)
+        installJSDeps()
           .then(() => {
-            downloadFile(esNextBrowsersURL, tmpESNextBrowsers)
-              .then(() => {
-                installJSDeps()
-                  .then(() => {
-                    let jsTable = buildJSON.buildTable(tmpES6Data, tmpES2016PlusData)
-                    resolve(jsTable)
-                  })
-                  .catch((err) => {
-                    reject(err)
-                  })
-              })
-              .catch((err) => {
-                reject(err)
-              })
+            let jsTable = buildJSON.buildTable(tmpES6Data, tmpES2016PlusData, tmpEnvironmentsData)
+            resolve(jsTable)
           })
           .catch((err) => {
             reject(err)
@@ -225,7 +227,8 @@ function cleanup () {
   deleteIfExists(tmpHtmlTable)
   deleteIfExists(tmpES6Data)
   deleteIfExists(tmpES2016PlusData)
-  deleteIfExists(tmpESNextBrowsers)
+  deleteIfExists(tmpCommonData)
+  deleteIfExists(tmpEnvironmentsData)
 }
 
 module.exports.createTable = (compatTableLocation) => {
