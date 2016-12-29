@@ -35,8 +35,8 @@ const argv =
     })
     .default({
       'target': ['.'],
-      'jsEnvs': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
-      'htmlEnvs': ['ie11', 'chrome54', 'firefox49', 'edge13', 'edge14', 'safari9', 'safari10'],
+      'jsEnvs': ['ie11', 'chrome56', 'firefox51', 'edge13', 'edge14', 'safari9', 'safari10'],
+      'htmlEnvs': ['ie11', 'chrome56', 'firefox51', 'edge13', 'edge14', 'safari9', 'safari10'],
       'features': ['js', 'html'],
       'ignoreFeatures': [],
       'config': './.compatrc.json'

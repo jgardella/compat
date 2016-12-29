@@ -55,9 +55,9 @@ By default, compat will check for compatibility issues with the following enviro
 
 - Internet Explorer 11
 - Microsoft Edge 13 & 14
-- Chrome 54
+- Chrome 56
 - Safari 9 & 10
-- Firefox 49
+- Firefox 51
 
 Use the `--jsEnvs` (`-j`) and `--htmlEnvs` (`-h`) flags to specify which environments
 to check for issues. Use the `---supportedEnvs` flag to show available environments. There
