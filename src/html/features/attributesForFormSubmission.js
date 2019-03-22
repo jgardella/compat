@@ -12,9 +12,9 @@ exports.func = (node) => {
       util.hasSomeAttribute(node, [
         'action', 'enctype', 'method', 'novalidate', 'target'
       ])) || (
-      util.hasSomeName(node, [
-        'button', 'input', 'keygen', 'object', 'select', 'textarea'
-      ]) &&
+    util.hasSomeName(node, [
+      'button', 'input', 'keygen', 'object', 'select', 'textarea'
+    ]) &&
       util.hasSomeAttribute(node, [
         'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget'
       ]))

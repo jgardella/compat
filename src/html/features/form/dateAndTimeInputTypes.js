@@ -9,7 +9,7 @@ exports.type = TYPE
  */
 exports.func = (node) => {
   if (util.hasSomeName(node, ['input']) && (
-      util.attributeIs(node, 'type', 'date') ||
+    util.attributeIs(node, 'type', 'date') ||
       util.attributeIs(node, 'type', 'month') ||
       util.attributeIs(node, 'type', 'week') ||
       util.attributeIs(node, 'type', 'time') ||
