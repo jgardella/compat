@@ -8,7 +8,7 @@ module.exports = function (program, feature) {
 
   let foundFeatures = detect.withFeatures(program, [feature]).features
 
-  assert.equal(true,
+  assert.strictEqual(true,
     Object.keys(foundFeatures).some((key) => {
       return key === feature.type
     })

@@ -45,9 +45,9 @@ function downloadFile (url, filePath) {
           file.close(resolve)
         })
       })
-      .on('error', (err) => {
-        reject('Failed to download file at ' + url + ' (' + err + ')')
-      })
+        .on('error', (err) => {
+          return reject(new Error('Failed to download file at ' + url + ' (' + err + ')'))
+        })
     })
   })
 }
@@ -155,12 +155,12 @@ function getLatestCommitSHA (owner, repo, ref) {
       if (res.statusCode === 200) {
         resolve(res.headers.etag)
       } else {
-        reject('Failed to load latest commit')
+        reject(new Error('Failed to load latest commit'))
       }
     })
-    .on('error', (err) => {
-      reject('Failed to load commit SHA at path ' + path + ' (' + err + ')')
-    })
+      .on('error', (err) => {
+        reject(new Error('Failed to load commit SHA at path ' + path + ' (' + err + ')'))
+      })
   })
 }
 
@@ -203,11 +203,11 @@ function createDirectoryStructure () {
   return new Promise((resolve, reject) => {
     fs.mkdir(dataDir, (err) => {
       if (err && err.code !== 'EEXIST') {
-        reject('Error creating folder ' + dataDir + ' (' + err + ')')
+        reject(new Error('Error creating folder ' + dataDir + ' (' + err + ')'))
       } else {
         fs.mkdir(tmpDataDir, (err) => {
           if (err && err.code !== 'EEXIST') {
-            reject('Error creating folder ' + tmpDataDir + ' (' + err + ')')
+            reject(new Error('Error creating folder ' + tmpDataDir + ' (' + err + ')'))
           } else {
             resolve()
           }
@@ -251,22 +251,22 @@ module.exports.createTable = (compatTableLocation) => {
                 cleanup()
                 resolve(true)
               })
-              .catch((err) => {
-                cleanup()
-                reject('Failed to create JS table: ' + err)
-              })
+                .catch((err) => {
+                  cleanup()
+                  reject(new Error('Failed to create JS table: ' + err))
+                })
             })
             .catch((err) => {
               cleanup()
-              reject('Failed to create HTML table: ' + err)
+              reject(new Error('Failed to create HTML table: ' + err))
             })
         }
       }).catch((err) => {
-        reject(err)
+        reject(new Error(err))
       })
     })
-    .catch((err) => {
-      reject(err)
-    })
+      .catch((err) => {
+        reject(new Error(err))
+      })
   })
 }
