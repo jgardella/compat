@@ -10,7 +10,7 @@ exports.type = TYPE
 exports.func = (node, parent) => {
   if (node.type === 'Literal' &&
       typeof node.value === 'number' &&
-      node.raw.toLowerCase().indexOf('b') > -1
+      node.raw.toLowerCase().indexOf('0b') === 0
   ) {
     return util.createFeature(node, TYPE)
   }
