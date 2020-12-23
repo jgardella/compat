@@ -2,6 +2,7 @@
 let octalLiterals = require('../../../../src/js/features/es6/syntax/octalAndBinaryLiterals/octalLiterals.js')
 let binaryLiterals = require('../../../../src/js/features/es6/syntax/octalAndBinaryLiterals/binaryLiterals.js')
 let featureTest = require('../../featureTest.js')
+let featureTestNotMatch = require('../../featureTestNotMatch.js')
 
 describe('Octal and Binary Literals Feature', function () {
   it('should find lowercase octal literal', function () {
@@ -22,5 +23,10 @@ describe('Octal and Binary Literals Feature', function () {
   it('should find uppercase octal literal', function () {
     let program = `0B01`
     featureTest(program, binaryLiterals)
+  })
+
+  it('should not find hex literal', function () {
+    let program = `0x0b`
+    featureTestNotMatch(program, binaryLiterals)
   })
 })
