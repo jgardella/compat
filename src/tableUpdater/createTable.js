@@ -178,7 +178,7 @@ function isUpToDate (compatTableLocation) {
 
     getLatestCommitSHA('kangax', 'compat-table', 'heads/gh-pages')
       .then((jsSHA) => {
-        getLatestCommitSHA('fyrd', 'caniuse', 'heads/master')
+        getLatestCommitSHA('fyrd', 'caniuse', 'heads/main')
           .then((htmlSHA) => {
             if (jsSHA !== currentSHAs.js ||
                 htmlSHA !== currentSHAs.html
